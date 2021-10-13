@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSetsTable extends Migration
+class CreateBagTransactionTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateSetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sets', function (Blueprint $table) {
+        Schema::create('bag_transaction_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('created_by')->constrained('users', 'id');
-            $table->foreignId('updated_by')->constrained('users', 'id');
-            $table->foreignId('facility_id')->constrained('facilities', 'id');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateSetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sets');
+        Schema::dropIfExists('bag_transaction_types');
     }
 }
