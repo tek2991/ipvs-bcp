@@ -21,9 +21,9 @@ class CreateBagsTable extends Migration
             $table->foreignId('to_facility_id')->constrained('facilities', 'id');
             $table->foreignId('bag_transaction_type_id')->constrained('bag_transaction_types', 'id');
             $table->foreignId('set_id')->constrained('sets', 'id');
-            $table->timestamps();
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
+            $table->timestamps();
         });
     }
 
