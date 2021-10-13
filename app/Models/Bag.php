@@ -26,11 +26,11 @@ class Bag extends Model
     }
 
     public function fromFacility(){
-        return $this->belongsTo(Facility::class);
+        return $this->belongsTo(Facility::class, 'from_facility_id', 'id');
     }
 
     public function toFacility(){
-        return $this->belongsTo(Facility::class);
+        return $this->belongsTo(Facility::class, 'to_facility_id', 'id');
     }
 
     public function set(){
