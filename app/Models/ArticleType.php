@@ -24,5 +24,6 @@ class ArticleType extends Model
 {
     protected $fillable = [
         'name',
+        'description',
     ];
 }

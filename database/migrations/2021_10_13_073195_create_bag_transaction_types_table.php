@@ -16,6 +16,7 @@ class CreateBagTransactionTypesTable extends Migration
         Schema::create('bag_transaction_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('description');
             $table->timestamps();
         });
     }

@@ -26,6 +26,7 @@ class BagTransactionType extends Model
 {
     protected $fillable = [
         'name',
+        'description',
     ];
 
     public function bags(){

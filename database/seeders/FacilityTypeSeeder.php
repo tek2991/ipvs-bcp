@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\FacilityType;
 use Illuminate\Database\Seeder;
 
 class FacilityTypeSeeder extends Seeder
@@ -13,6 +14,15 @@ class FacilityTypeSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $facility_types = [
+            '' => ''  
+        ];
+
+        foreach ($facility_types as $key => $value) {
+            FacilityType::create([
+                'name' => $key,
+                'description' => $value
+            ]);
+        }
     }
 }

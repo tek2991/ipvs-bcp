@@ -26,6 +26,7 @@ class FacilityType extends Model
 {
     protected $fillable = [
         'name',
+        'description',
     ];
 
     public function facilities(){
