@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             DistrictSeeder::class,
             ReportingCircleSeeder::class,
             FacilitySeeder::class,
+            CadreSeeder::class,
             UserSeeder::class,
         ]);
     }
