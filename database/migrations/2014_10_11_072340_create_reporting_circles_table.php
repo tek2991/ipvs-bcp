@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFacilitiesTable extends Migration
+class CreatereportingCirclesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateFacilitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('facilities', function (Blueprint $table) {
+        Schema::create('reporting_circles', function (Blueprint $table) {
             $table->id();
-            $table->string('facility_code');
             $table->string('name');
-            $table->foreignId('facility_type_id')->constrained();
-            $table->foreignId('districts')->constrained();
-            $table->foreignId('reporting_circle_id')->constrained('reporting_circles', 'id');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateFacilitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facilities');
+        Schema::dropIfExists('reporting_circles');
     }
 }
