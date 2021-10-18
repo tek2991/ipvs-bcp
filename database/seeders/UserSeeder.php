@@ -332,13 +332,13 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($users as $user) {
-            $facility = Facility::where('facility_code', 'ilike', $user['facility_id'])->first();
+            $facility = Facility::where('facility_code', 'ilike', $user['facility_id'])->get();
             $cadre = Cadre::where('name', 'ilike', $user['cadre'])->first();
 
             User::factory()->create([
                 'name' => $user['name'],
                 'username' => $user['employee_id'],
-                'facility_id' => $facility->id,
+                'facility_id' => count($facility) > 0 ? $facility->first()->id : null,
                 'cadre_id' => $cadre->id,
             ]);
         }
