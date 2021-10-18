@@ -74,4 +74,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function facility(){
+        return $this->belongsTo(Facility::class);
+    }
+
+    public function cadre(){
+        return $this->belongsTo(Cadre::class);
+    }
 }
