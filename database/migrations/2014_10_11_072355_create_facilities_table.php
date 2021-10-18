@@ -17,6 +17,7 @@ class CreateFacilitiesTable extends Migration
             $table->id();
             $table->string('facility_code');
             $table->string('name');
+            $table->string('pincode');
             $table->foreignId('facility_type_id')->constrained();
             $table->foreignId('districts')->constrained();
             $table->foreignId('reporting_circle_id')->constrained('reporting_circles', 'id');

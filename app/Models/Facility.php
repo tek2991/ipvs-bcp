@@ -32,10 +32,21 @@ class Facility extends Model
     protected $fillable = [
         'facility_code',
         'name',
+        'pincode',
+        'district_id',
+        'reporting_circle_id',
         'facility_type_id',
     ];
 
     public function facilityType(){
         return $this->belongsTo(FacilityType::class);
+    }
+
+    public function district(){
+        return $this->belongsTo(District::class);
+    }
+
+    public function reportingCircle(){
+        return $this->belongsTo(ReportingCircle::class);
     }
 }
