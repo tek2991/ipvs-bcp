@@ -15,7 +15,9 @@ class BagTypeSeeder extends Seeder
     public function run()
     {
         $bag_types = [
-            '' => ''  
+            'PP' => 'Parcel Bag',  
+            'RP' => 'Register Bag',  
+            'SP' => 'Speed Post Bag',  
         ];
 
         foreach ($bag_types as $key => $value) {

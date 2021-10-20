@@ -67,7 +67,7 @@
                 <div class="px-6 pt-6 font-bold">
                     <h3>Set Begin</h3>
                 </div>
-                <form action="{{ route('set.create') }}" method="post">
+                <form action="{{ route('set.store') }}" method="post">
                     @csrf
                     <div class="px-7 py-2 font-bold">
                         <label for="confirm" class="pt-2">Confirm</label>

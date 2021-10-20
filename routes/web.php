@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BagReceiveController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SetController;
 
@@ -26,6 +27,8 @@ Route::middleware(['auth'])->group(function(){
     
     Route::resource('set', SetController::class)->only('index', 'store');
     Route::put('set', [SetController::class, 'update'])->name('set.update');
+
+    Route::get('bag-receive', [BagReceiveController::class, 'index'])->name('bag-receive.index');
 });
 
 

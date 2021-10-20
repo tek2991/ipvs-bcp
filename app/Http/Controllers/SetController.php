@@ -43,7 +43,7 @@ class SetController extends Controller
     public function update(){
         $user = Auth::user();
         $current_facility = $user->facility;
-        $active_set = Set::where('facility_id', $current_facility->id)->where('is_active', true)->get();
+        $active_set = $current_facility->sets()->where('is_active', true)->get();
 
         if (count($active_set) == 0) {
             return redirect()

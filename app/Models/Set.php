@@ -47,4 +47,8 @@ class Set extends Model
     public function facility(){
         return $this->belongsTo(Facility::class);
     }
+
+    public function bags(){
+        return $this->hasMany(Bag::class);
+    }
 }
