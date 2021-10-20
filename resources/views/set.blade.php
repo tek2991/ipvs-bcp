@@ -36,7 +36,7 @@
                     <h3>Set Begin:</h3>
                 </div>
                 <div class="p-6 font-semibold">
-                    Current date: {{ now() }}
+                    Current date: {{ now()->toDayDateTimeString() }} <br>
                 </div>
                 <form action="{{ route('set.create') }}" method="post">
                     @csrf
@@ -46,7 +46,7 @@
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     </div>
                     <x-button class="mx-6 mb-6 bg-red-800 hover:bg-red-600">
-                        {{ __('Generate subjects from main Database') }}
+                        {{ __('Set Begin') }}
                     </x-button>
                 </form>
             </div>
