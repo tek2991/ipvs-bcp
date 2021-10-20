@@ -25,7 +25,8 @@ Route::middleware(['auth'])->group(function(){
     })->name('dashboard');
 
     Route::get('set', [SetController::class, 'index'])->name('set');
-    Route::post('set', [GSetController::class, 'create'])->name('set.create');
+    Route::post('set', [SetController::class, 'store'])->name('set.create');
+    Route::put('set', [SetController::class, 'update'])->name('set.update');
 });
 
 

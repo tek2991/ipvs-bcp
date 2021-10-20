@@ -49,4 +49,8 @@ class Facility extends Model
     public function reportingCircle(){
         return $this->belongsTo(ReportingCircle::class);
     }
+
+    public function sets(){
+        return $this->hasMany(Set::class);
+    }
 }

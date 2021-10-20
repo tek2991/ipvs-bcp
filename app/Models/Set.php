@@ -33,6 +33,7 @@ class Set extends Model
         'created_by',
         'updated_by',
         'facility_id',
+        'is_active',
     ];
 
     public function creator(){

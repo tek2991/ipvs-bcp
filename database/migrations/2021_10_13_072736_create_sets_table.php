@@ -18,6 +18,7 @@ class CreateSetsTable extends Migration
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
             $table->foreignId('facility_id')->constrained('facilities', 'id');
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }
