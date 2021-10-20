@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('set')" :active="request()->routeIs('set')">
                         {{ __('Set Control') }}
                     </x-nav-link>
 
