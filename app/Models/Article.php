@@ -54,6 +54,7 @@ class Article extends Model
         'article_transaction_type_id',
         'bag_id',
         'set_id',
+        'is_insured',
         'created_by',
         'updated_by',
     ];

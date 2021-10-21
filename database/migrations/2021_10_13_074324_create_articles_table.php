@@ -20,8 +20,9 @@ class CreateArticlesTable extends Migration
             $table->foreignId('from_facility_id')->constrained('facilities', 'id');
             $table->foreignId('to_facility_id')->constrained('facilities', 'id');
             $table->foreignId('article_transaction_type_id')->constrained('article_transaction_types');
-            $table->foreignId('bag_id')->constrained();
-            $table->foreignId('set_id')->constrained();
+            $table->foreignId('bag_id')->constrained('bags');
+            $table->foreignId('set_id')->constrained('sets');
+            $table->boolean('is_insured');
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
             $table->timestamps();

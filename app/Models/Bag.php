@@ -81,4 +81,8 @@ class Bag extends Model
     public function updator(){
         return $this->belongsTo(User::class, 'updated_by', 'id');
     }
+
+    public function articles(){
+        return $this->hasMany(Article::class);
+    }
 }
