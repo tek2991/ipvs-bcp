@@ -33,7 +33,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('bag-receive', [BagReceiveController::class, 'store'])->name('bag-receive.store');
 
     Route::get('bag-open', [BagOpenController::class, 'index'])->name('bag-open.index');
-    Route::get('bag-open-scan', [BagOpenController::class, 'scan'])->name('bag-open.scan');
+    Route::get('bag-open-bag-scan', [BagOpenController::class, 'bagScan'])->name('bag-open.bagScan');
+    Route::post('bag-open-article-scan', [BagOpenController::class, 'articleScan'])->name('bag-open.articleScan');
 });
 
 

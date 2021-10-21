@@ -17,8 +17,11 @@ class BagTransactionTypeSeeder extends Seeder
         $bag_transaction_types = [
             'RD' => 'Bag Receipt',  
             'OP' => 'Bag Open',  
+            'OP_SCAN' => 'Bag Open Scan',  
             'CL' => 'Bag Close',  
-            'Di' => 'Bag Dispatch',  
+            'CL_SCAN' => 'Bag Close Scan',  
+            'DI' => 'Bag Dispatch',  
+            'DI_SCAN' => 'Bag Dispatch Scan',  
         ];
 
         foreach ($bag_transaction_types as $key => $value) {

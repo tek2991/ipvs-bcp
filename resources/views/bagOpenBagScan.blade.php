@@ -58,14 +58,15 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form action="{{ route('bag-open.scan') }}" method="get">
+                <form action="{{ route('bag-open.bagScan') }}" method="get">
                     @csrf
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
                             <div class="grid grid-cols-2 gap-16">
                                 <div class="grid grid-cols-2 gap-2">
                                     <label for="bag_no" class="pt-2 text-lg font-semibold">Bag No: </label>
-                                    <input name="bag_no" id="bag_no" type="text" value="{{ $errors->any() ? old('bag_no') : '' }}"
+                                    <input name="bag_no" id="bag_no" type="text"
+                                        value="{{ $errors->any() ? old('bag_no') : '' }}"
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </input>
                                 </div>
@@ -82,5 +83,56 @@
             </div>
         </div>
     </div>
+
+    @if ($open_bags->total() > 0)
+        <div class="pt-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="p-6">
+                    {{ $open_bags->links() }}
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-6 pb-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="text-lg font-semibold p-4">
+                    Active bag opening scans
+                </div>
+            </div>
+            @foreach ($open_bags as $open_bag)
+                <div class="p-2">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="p-4 bg-white border-b border-gray-200">
+                            <div class="grid grid-cols-5 gap-1">
+                                <div class="text-lg font-semibold mb-3">{{ $open_bag->bag_no }}</div>
+                                <span>{{ $open_bag->bagType->description }}({{ $open_bag->bagTransactionType->description }})</span>
+                                <span>From: {{ $open_bag->fromFacility->name }}</span>
+                                <span>{{ $open_bag->creator->name }}</span>
+                                <span>{{ $open_bag->created_at }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="pt-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="p-6">
+                    {{ $open_bags->links() }}
+                </div>
+            </div>
+        </div>
+    @else
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-gray-400 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 font-semibold">
+                        No Bags Received!
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
 </x-app-layout>
