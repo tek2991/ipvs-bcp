@@ -23,7 +23,7 @@
                         <x-nav-link :href="route('bag-receive.index')" :active="request()->routeIs('bag-receive.index')">
                             {{ __('Bag Receive') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <x-nav-link :href="route('bag-open.index')" :active="request()->routeIs('bag-open.index')">
                             {{ __('Bag Open') }}
                         </x-nav-link>
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">

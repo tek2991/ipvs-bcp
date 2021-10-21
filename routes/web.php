@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\BagReceiveController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SetController;
+use App\Http\Controllers\BagOpenController;
+use App\Http\Controllers\BagReceiveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,9 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('bag-receive', [BagReceiveController::class, 'index'])->name('bag-receive.index');
     Route::post('bag-receive', [BagReceiveController::class, 'store'])->name('bag-receive.store');
+
+    Route::get('bag-open', [BagOpenController::class, 'index'])->name('bag-open.index');
+    Route::get('bag-open-scan', [BagOpenController::class, 'scan'])->name('bag-open.scan');
 });
 
 
