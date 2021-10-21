@@ -26,6 +26,9 @@ class ArticleNumberRule implements Rule
     public function passes($attribute, $value)
     {
         $serial = substr($value, 2, 8);
+        if(!is_numeric($serial)){
+            return false;
+        }
         $checksum = substr($value, 10, 1);
         $serial_arr = str_split($serial);
         $weights = [8, 6, 4, 2, 3, 5, 9, 7];
