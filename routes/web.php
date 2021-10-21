@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('set', [SetController::class, 'update'])->name('set.update');
 
     Route::get('bag-receive', [BagReceiveController::class, 'index'])->name('bag-receive.index');
+    Route::post('bag-receive', [BagReceiveController::class, 'store'])->name('bag-receive.store');
 });
 
 

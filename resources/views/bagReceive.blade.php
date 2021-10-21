@@ -58,17 +58,17 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form action="" method="post">
+                <form action="{{ route('bag-receive.store') }}" method="post">
                     @csrf
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
                             <div class="grid grid-cols-2 gap-16">
                                 <div class="grid grid-cols-2 gap-2">
                                     <label for="from_facility_id" class="pt-2 text-lg font-semibold">From: </label>
-                                    <select name="from_facility_id" id="from_facility_id"
+                                    <select name="from_facility_id" id="from_facility_id" autofocus
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                         @foreach ($facilities as $facility)
-                                            <option value="{{ $facility->id }}">
+                                            <option value="{{ $facility->id }}" {{ $facility->id == old('from_facility_id') ? 'selected' : '' }}>
                                                 {{ $facility->name }}
                                             </option>
                                         @endforeach
@@ -79,7 +79,7 @@
                                     <select name="bag_type_id" id="bag_type_id"
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                         @foreach ($bag_types as $bag_type)
-                                            <option value="{{ $bag_type->id }}">
+                                            <option value="{{ $bag_type->id }}" {{ $bag_type->id == old('bag_type_id') ? 'selected' : '' }}>
                                                 {{ $bag_type->description }}
                                             </option>
                                         @endforeach
@@ -87,13 +87,16 @@
                                 </div>
                                 <div class="grid grid-cols-2 gap-2">
                                     <label for="bag_no" class="pt-2 text-lg font-semibold">Bag No: </label>
-                                    <input name="bag_no" id="bag_no" type="text"
+                                    <input name="bag_no" id="bag_no" type="text" value="{{ $errors->any() ? old('bag_no') : '' }}"
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </input>
                                 </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-w-m">Submit</button>
+
+                                <div>
+                                    <button type="submit"
+                                        class="inline-flex items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Submit</button>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -116,12 +119,12 @@
                 <div class="p-2">
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div class="p-4 bg-white border-b border-gray-200">
-                            <div class="text-lg font-semibold mb-3">{{ $bag_received->bag_no }}</div>
-                            <div class="grid grid-cols-4 gap-2">
-                                <span>Bag Type: {{ $bag_received->bagType->name }}</span>
-                                <span>Bag Status: {{ $bag_received->bagTransactionType->name }}</span>
-                                <span>Reveived by: {{ $bag_received->created_by->name }}</span>
-                                <span>Received at: {{ $bag_received->created_at->toDayDateTimeString() }}</span>
+                            <div class="grid grid-cols-5 gap-1">
+                                <div class="text-lg font-semibold mb-3">{{ $bag_received->bag_no }}</div>
+                                <span>{{ $bag_received->bagType->description }}({{ $bag_received->bagTransactionType->description }})</span>
+                                <span>From: {{ $bag_received->fromFacility->name }}</span>
+                                <span>{{ $bag_received->creator->name }}</span>
+                                <span>{{ $bag_received->created_at }}</span>
                             </div>
                         </div>
                     </div>
@@ -147,6 +150,5 @@
             </div>
         </div>
     @endif
-
 
 </x-app-layout>
