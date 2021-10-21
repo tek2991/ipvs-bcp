@@ -48,7 +48,7 @@ class BagReceiveController extends Controller
         ]);
 
         Bag::create([
-            'bag_no' => $request->bag_no,
+            'bag_no' => strtoupper($request->bag_no),
             'bag_type_id' => $request->bag_type_id,
             'from_facility_id' => $request->from_facility_id,
             'to_facility_id' => $current_facility->id,
