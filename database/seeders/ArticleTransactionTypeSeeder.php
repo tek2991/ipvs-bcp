@@ -16,7 +16,9 @@ class ArticleTransactionTypeSeeder extends Seeder
     {
         $article_transaction_types = [
             'OP' => 'Bag Open',  
+            'OP_SCAN' => 'Bag Open Scan',  
             'CL' => 'Bag Close', 
+            'CL_SCAN' => 'Bag Close Scan', 
         ];
 
         foreach ($article_transaction_types as $key => $value) {
