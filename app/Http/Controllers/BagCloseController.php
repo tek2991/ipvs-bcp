@@ -32,7 +32,8 @@ class BagCloseController extends Controller
         return view('bagClose', compact('active_set', 'facilities', 'bag_types', 'close_bags'));
     }
 
-    public function bagScan(Request $request){
+    public function bagScan(Request $request)
+    {
         $user = Auth::user();
         $current_facility = $user->facility;
         $active_set = $current_facility->sets()->where('is_active', true)->firstOrFail();
@@ -52,7 +53,7 @@ class BagCloseController extends Controller
             ],
         ]);
 
-        if(!Bag::where('bag_no', $request->bag_no)->where('set_id', $active_set->id)->where('bag_transaction_type_id', $bag_transaction_type_id)->exists()){
+        if (!Bag::where('bag_no', $request->bag_no)->where('set_id', $active_set->id)->where('bag_transaction_type_id', $bag_transaction_type_id)->exists()) {
             Bag::create([
                 'bag_no' => strtoupper($request->bag_no),
                 'bag_type_id' => $request->bag_type_id,
@@ -64,7 +65,7 @@ class BagCloseController extends Controller
                 'updated_by' => $user->id,
             ]);
         }
-
+        
         $bag = Bag::where('bag_no', $request->bag_no)->where('set_id', $active_set->id)->where('bag_transaction_type_id', $bag_transaction_type_id)->firstOrFail();
         $articles = $bag->articles()->orderBy('created_at', 'desc')->paginate();
 
@@ -108,6 +109,7 @@ class BagCloseController extends Controller
             'to_facility_id' => $request->to_facility_id,
             'article_transaction_type_id' =>  $article_transaction_type_id,
             'bag_id' => $request->bag_id,
+            'closing_bag_id' => $request->bag_id,
             'set_id' => $active_set->id,
             'created_by' => $user->id,
             'updated_by' => $user->id,
@@ -116,5 +118,53 @@ class BagCloseController extends Controller
         return redirect()
             ->back()
             ->withInput();
+    }
+
+    public function articleDeleteScan(Request $request)
+    {
+        $user = Auth::user();
+        $current_facility = $user->facility;
+        $active_set = $current_facility->sets()->where('is_active', true)->firstOrFail();
+        $article_status = ArticleTransactionType::whereIn('name', ['CL_SCAN'])->get()->modelKeys();
+
+        $this->validate($request, [
+            'bag_no' => [
+                'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{2}[sS]{1}[0-9]{10}$^',
+                Rule::exists('bags')->where(function ($query) use ($active_set) {
+                    $bag_statuses = BagTransactionType::whereIn('name', ['CL_SCAN'])->get()->modelKeys();
+                    return $query->where('set_id', $active_set->id)->whereIn('bag_transaction_type_id', $bag_statuses);
+                })
+            ],
+
+            'bag_id' => 'bail|required|exists:bags,id',
+
+            'article_no_for_delete' => [
+                'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}$^',
+                Rule::exists('articles', 'article_no')->where(function ($query) use ($request, $article_status) {
+                    return $query->where('bag_id', $request->bag_id)->whereIn('article_transaction_type_id', $article_status);
+                })
+            ],
+        ]);
+
+        $article = Article::where('article_no', $request->article_no_for_delete)->where('bag_id', $request->bag_id)->whereIn('article_transaction_type_id', $article_status)->first();
+
+        $opening_bag = $article->openingBag;
+
+        $article_transaction_type_id = ArticleTransactionType::where('name', 'OP')->get()->first()->id;
+
+        $article->update([
+            'from_facility_id' => $opening_bag->fromFacility->id,
+            'to_facility_id' => $current_facility->id,
+            'article_transaction_type_id' =>  $article_transaction_type_id,
+            'bag_id' => $opening_bag->id,
+            'closing_bag_id' => null,
+            'set_id' => $active_set->id,
+            'updated_by' => $user->id,
+        ]);
+
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('success', 'Article removed from list: ' . $request->article_no_for_delete);
     }
 }

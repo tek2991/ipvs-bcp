@@ -53,6 +53,8 @@ class Article extends Model
         'to_facility_id',
         'article_transaction_type_id',
         'bag_id',
+        'opening_bag_id',
+        'closing_bag_id',
         'set_id',
         'is_insured',
         'created_by',
@@ -77,6 +79,14 @@ class Article extends Model
 
     public function bag(){
         return $this->belongsTo(Bag::class);
+    }
+
+    public function openingBag(){
+        return $this->belongsTo(Bag::class, 'opening_bag_id', 'id');
+    }
+
+    public function closingBag(){
+        return $this->belongsTo(Bag::class, 'closing_bag_id', 'id');
     }
 
     public function set(){

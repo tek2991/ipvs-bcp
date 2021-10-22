@@ -108,6 +108,7 @@ class BagOpenController extends Controller
             'to_facility_id' => $current_facility->id,
             'article_transaction_type_id' =>  $article_transaction_type_id,
             'bag_id' => $request->bag_id,
+            'opening_bag_id' => $request->bag_id,
             'set_id' => $active_set->id,
             'is_insured' => $request->is_insured,
             'created_by' => $user->id,

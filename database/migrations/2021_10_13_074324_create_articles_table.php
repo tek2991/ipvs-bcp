@@ -21,6 +21,8 @@ class CreateArticlesTable extends Migration
             $table->foreignId('to_facility_id')->constrained('facilities', 'id');
             $table->foreignId('article_transaction_type_id')->constrained('article_transaction_types');
             $table->foreignId('bag_id')->constrained('bags');
+            $table->foreignId('opening_bag_id')->nullable()->constrained('bags', 'id');
+            $table->foreignId('closing_bag_id')->nullable()->constrained('bags', 'id');
             $table->foreignId('set_id')->constrained('sets');
             $table->boolean('is_insured');
             $table->foreignId('created_by')->constrained('users', 'id');
