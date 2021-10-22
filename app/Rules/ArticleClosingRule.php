@@ -3,9 +3,10 @@
 namespace App\Rules;
 
 use App\Models\Article;
+use App\Models\ArticleTransactionType;
 use Illuminate\Contracts\Validation\Rule;
 
-class ArticleOpeningRule implements Rule
+class ArticleClosingRule implements Rule
 {
     private $active_set = '';
     /**
@@ -28,7 +29,8 @@ class ArticleOpeningRule implements Rule
     public function passes($attribute, $value)
     {
         $article_no = trim(strtoupper($value));
-        return Article::where('article_no', $article_no)->where('set_id', $this->active_set->id)->exists() ? false : true;
+        $article_statuses = ArticleTransactionType::whereIn('name', ['OP'])->get()->modelKeys();
+        return Article::where('article_no', $article_no)->where('set_id', $this->active_set->id)->whereIn('article_transaction_type_id', $article_statuses)->exists() ? true : false;
     }
 
     /**
@@ -38,6 +40,6 @@ class ArticleOpeningRule implements Rule
      */
     public function message()
     {
-        return 'The article no has already been taken(case insensitive).';
+        return 'Article cannot be closed';
     }
 }

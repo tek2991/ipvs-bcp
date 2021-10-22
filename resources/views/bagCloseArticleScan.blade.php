@@ -60,7 +60,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
-                        <form action="{{ route('bag-open.articleScan') }}" method="post">
+                        <form action="{{ route('bag-close.articleScan') }}" method="post">
                             @csrf
                             <input type="hidden" name="bag_no" value="{{ $request->bag_no }}">
                             <input type="hidden" name="bag_id" value="{{ $bag->id }}">
@@ -78,21 +78,6 @@
                                     <input id="to" type="text" disabled value="{{ $bag->toFacility->name }}"
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </input>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-12">
-                                <div class="grid grid-cols-2 gap-16 mt-6">
-                                    <label for="article_type_id" class="pt-2 text-lg font-semibold">Article
-                                        type:</label>
-                                    <select name="article_type_id" id="article_type_id"
-                                        class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                        @foreach ($article_types as $article_type)
-                                            <option value="{{ $article_type->id }}"
-                                                {{ $article_type->id == old('article_type_id') ? 'selected' : '' }}>
-                                                {{ $article_type->description }}
-                                            </option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-12 mt-6">
