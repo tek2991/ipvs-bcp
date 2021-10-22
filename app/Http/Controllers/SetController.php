@@ -16,7 +16,7 @@ class SetController extends Controller
         return view('set', compact('currently_active', 'previously_active'));
     }
 
-    public function store(Request $request)
+    public function store()
     {
         $user = Auth::user();
         $current_facility = $user->facility;

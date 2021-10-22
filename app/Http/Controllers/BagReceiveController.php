@@ -7,6 +7,7 @@ use App\Models\BagType;
 use App\Models\Facility;
 use Illuminate\Http\Request;
 use App\Models\BagTransactionType;
+use App\Rules\BagReceiveRule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
@@ -36,14 +37,15 @@ class BagReceiveController extends Controller
         $bag_transaction_type_id = BagTransactionType::where('name', 'RD')->get()->first()->id;
 
         $this->validate($request, [
-            'from_facility_id' => 'required|exists:facilities,id',
-            'bag_type_id' => 'required|exists:bag_types,id',
+            'from_facility_id' => 'bail|required|exists:facilities,id',
+            'bag_type_id' => 'bail|required|exists:bag_types,id',
             // 'bag_no' => 'required|alpha_num|size:13|regex:^[a-zA-Z]{3}[0-9]{10}$^',
             'bag_no' => [
-                'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{3}[0-9]{10}$^',
+                'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{3}[0-9]{10}$^',
                 Rule::unique('bags')->where(function ($query) use ($active_set_id) {
                     return $query->where('set_id', $active_set_id);
-                })
+                }),
+                new BagReceiveRule($active_set_id),
             ],
         ]);
 

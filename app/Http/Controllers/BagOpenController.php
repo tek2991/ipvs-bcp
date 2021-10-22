@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ArticleTransactionType;
 use App\Models\ArticleType;
 use App\Rules\ArticleNumberRule;
+use App\Rules\ArticleOpeningRule;
 
 class BagOpenController extends Controller
 {
@@ -38,7 +39,7 @@ class BagOpenController extends Controller
 
         $this->validate($request, [
             'bag_no' => [
-                'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{3}[0-9]{10}$^',
+                'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{3}[0-9]{10}$^',
                 Rule::exists('bags')->where(function ($query) use ($active_set, $bag_statuses) {
                     return $query->where('set_id', $active_set->id)->whereIn('bag_transaction_type_id', $bag_statuses);
                 })
@@ -73,27 +74,29 @@ class BagOpenController extends Controller
 
         $this->validate($request, [
             'bag_no' => [
-                'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{3}[0-9]{10}$^',
+                'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{3}[0-9]{10}$^',
                 Rule::exists('bags')->where(function ($query) use ($active_set) {
                     $bag_statuses = BagTransactionType::whereIn('name', ['RD', 'OP_SCAN'])->get()->modelKeys();
                     return $query->where('set_id', $active_set->id)->whereIn('bag_transaction_type_id', $bag_statuses);
                 })
             ],
 
-            'bag_id' => 'required|exists:bags,id',
+            'bag_id' => 'bail|required|exists:bags,id',
 
             'article_no' => [
-                'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}$^',
+                'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}$^',
                 Rule::unique('articles')->where(function ($query) use ($active_set) {
                     return $query->where('set_id', $active_set->id);
                 }),
 
                 new ArticleNumberRule,
+
+                new ArticleOpeningRule($request->bag_no, $current_facility, $active_set),
             ],
 
-            'article_type_id' => 'required|integer|exists:article_types,id',
-            'is_insured' => 'required|boolean',
-            'from_facility_id' => 'required|integer|exists:facilities,id'
+            'article_type_id' => 'bail|required|integer|exists:article_types,id',
+            'is_insured' => 'bail|required|boolean',
+            'from_facility_id' => 'bail|required|integer|exists:facilities,id'
         ]);
 
         $article_transaction_type_id = ArticleTransactionType::where('name', 'OP_SCAN')->get()->first()->id;
@@ -125,17 +128,17 @@ class BagOpenController extends Controller
 
         $this->validate($request, [
             'bag_no' => [
-                'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{3}[0-9]{10}$^',
+                'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{3}[0-9]{10}$^',
                 Rule::exists('bags')->where(function ($query) use ($active_set) {
                     $bag_statuses = BagTransactionType::whereIn('name', ['RD', 'OP_SCAN'])->get()->modelKeys();
                     return $query->where('set_id', $active_set->id)->whereIn('bag_transaction_type_id', $bag_statuses);
                 })
             ],
 
-            'bag_id' => 'required|exists:bags,id',
+            'bag_id' => 'bail|required|exists:bags,id',
 
             'article_no_for_delete' => [
-                'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}$^',
+                'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}$^',
                 Rule::exists('articles', 'article_no')->where(function ($query) use ($request, $article_status) {
                     return $query->where('bag_id', $request->bag_id)->whereIn('article_transaction_type_id', $article_status);
                 })
