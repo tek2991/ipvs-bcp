@@ -155,7 +155,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 font-semibold">
-                    <form action="{{ route('bag-open.save', ['bag' => $bag->id]) }}" method="post">
+                    <form action="{{ route('bag-close.save', ['bag' => $bag->id]) }}" method="post">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="bag_id" value="{{ $bag->id }}">

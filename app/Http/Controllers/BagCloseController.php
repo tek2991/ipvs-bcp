@@ -175,7 +175,7 @@ class BagCloseController extends Controller
 
         $this->validate($request, [
             'bag_no' => [
-                'bail', 'required', 'alpha_num', 'size:13', 'regex:^regex:^[a-zA-Z]{2}[sS]{1}[0-9]{10}$^',
+                'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{2}[sS]{1}[0-9]{10}$^',
                 Rule::exists('bags')->where(function ($query) use ($active_set) {
                     $bag_statuses = BagTransactionType::whereIn('name', ['CL_SCAN'])->get()->modelKeys();
                     return $query->where('set_id', $active_set->id)->whereIn('bag_transaction_type_id', $bag_statuses);
