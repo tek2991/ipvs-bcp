@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BagCloseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SetController;
 use App\Http\Controllers\BagOpenController;
@@ -37,6 +38,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('bag-open-article-scan', [BagOpenController::class, 'articleScan'])->name('bag-open.articleScan');
     Route::put('bag-open-save/{bag}', [BagOpenController::class, 'save'])->name('bag-open.save');
     Route::delete('bag-open-article-delete-scan', [BagOpenController::class, 'articleDeleteScan'])->name('bag-open.articleDeleteScan');
+
+    Route::get('bag-close', [BagCloseController::class, 'index'])->name('bag-close.index');
+    Route::get('bag-close-bag-scan', [BagCloseController::class, 'bagScan'])->name('bag-close.bagScan');
 });
 
 
