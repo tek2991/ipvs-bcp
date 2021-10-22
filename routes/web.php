@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SetController;
 use App\Http\Controllers\BagOpenController;
 use App\Http\Controllers\BagReceiveController;
+use App\Http\Controllers\pdfReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('bag-close-article-scan', [BagCloseController::class, 'articleScan'])->name('bag-close.articleScan');
     Route::put('bag-close-save/{bag}', [BagCloseController::class, 'save'])->name('bag-close.save');
     Route::delete('bag-close-article-delete-scan', [BagCloseController::class, 'articleDeleteScan'])->name('bag-close.articleDeleteScan');
+
+    Route::get('manifest/{bag}', [pdfReportController::class, 'manifest'])->name('bag-manifest');
 });
 
 
