@@ -42,6 +42,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('bag-close', [BagCloseController::class, 'index'])->name('bag-close.index');
     Route::get('bag-close-bag-scan', [BagCloseController::class, 'bagScan'])->name('bag-close.bagScan');
     Route::post('bag-close-article-scan', [BagCloseController::class, 'articleScan'])->name('bag-close.articleScan');
+
+    Route::delete('bag-close-article-delete-scan', [BagCloseController::class, 'articleDeleteScan'])->name('bag-close.articleDeleteScan');
 });
 
 

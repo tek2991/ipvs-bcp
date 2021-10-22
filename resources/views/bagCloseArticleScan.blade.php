@@ -176,7 +176,7 @@
             <div class="bg-gray-400 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 font-semibold">
                     <div class="text-xl mb-6 font-semibold">Remove article:</div>
-                    <form action="{{ route('bag-open.articleDeleteScan') }}" method="post">
+                    <form action="{{ route('bag-close.articleDeleteScan') }}" method="post">
                         @csrf
                         @method('DELETE')
 
