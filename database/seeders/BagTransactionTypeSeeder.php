@@ -16,10 +16,10 @@ class BagTransactionTypeSeeder extends Seeder
     {
         $bag_transaction_types = [
             'RD' => 'Bag Receipt',  
-            'OP' => 'Bag Open',  
             'OP_SCAN' => 'Bag Open Scan',  
-            'CL' => 'Bag Close',  
+            'OP' => 'Bag Open',  
             'CL_SCAN' => 'Bag Close Scan',  
+            'CL' => 'Bag Close',  
             'DI' => 'Bag Dispatch',  
             'DI_SCAN' => 'Bag Dispatch Scan',  
         ];

@@ -151,6 +151,35 @@ class BagOpenController extends Controller
 
         return redirect()
         ->back()
-        ->withInput();
+        ->withInput()
+        ->with('success', 'Article removed from list: '. $request->article_no_for_delete);
+    }
+
+    public function save(Bag $bag, Request $request){
+        $user = Auth::user();
+        $current_facility = $user->facility;
+        $active_set = $current_facility->sets()->where('is_active', true)->firstOrFail();
+
+        $this->validate($request, [
+            'bag_no' => [
+                'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{3}[0-9]{10}$^',
+                Rule::exists('bags')->where(function ($query) use ($active_set) {
+                    $bag_statuses = BagTransactionType::whereIn('name', ['RD', 'OP_SCAN'])->get()->modelKeys();
+                    return $query->where('set_id', $active_set->id)->whereIn('bag_transaction_type_id', $bag_statuses);
+                })
+            ],
+        ]);
+
+        $bag_transaction_type_id = BagTransactionType::where('name', 'OP')->get()->first()->id;
+        $bag->update([
+            'bag_transaction_type_id' => $bag_transaction_type_id,
+        ]);
+
+        $article_transaction_type_id = ArticleTransactionType::where('name', 'OP')->get()->first()->id;
+        $bag->articles()->update([
+            'article_transaction_type_id' => $article_transaction_type_id,
+        ]);
+
+        return redirect()->route('bag-open.index');
     }
 }
