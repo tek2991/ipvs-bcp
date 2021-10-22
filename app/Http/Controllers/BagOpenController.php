@@ -25,7 +25,7 @@ class BagOpenController extends Controller
 
         $open_bags = Bag::where('set_id', $active_set->id)->whereIn('bag_transaction_type_id', $bag_statuses)->paginate();
 
-        return view('bagOpenBagScan', compact('active_set', 'open_bags'));
+        return view('bagOpen', compact('active_set', 'open_bags'));
     }
 
     public function bagScan(Request $request)
