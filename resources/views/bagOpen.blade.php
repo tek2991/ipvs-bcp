@@ -106,7 +106,7 @@
                             <div class="grid grid-cols-5 gap-1">
                                 <div class="text-lg font-semibold mb-3">{{ $open_bag->bag_no }}</div>
                                 <span>{{ $open_bag->bagType->description }}({{ $open_bag->bagTransactionType->description }})</span>
-                                <span>From: {{ $open_bag->fromFacility->name }}</span>
+                                <span>{{ $open_bag->fromFacility->name }}</span>
                                 <span>{{ $open_bag->creator->name }}</span>
                                 <span>{{ $open_bag->created_at }}</span>
                             </div>
@@ -128,7 +128,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-gray-400 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 font-semibold">
-                        No Bags Received!
+                        No opening bags!
                     </div>
                 </div>
             </div>

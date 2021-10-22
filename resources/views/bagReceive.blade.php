@@ -115,6 +115,11 @@
         </div>
 
         <div class="pt-6 pb-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="text-lg font-semibold p-4">
+                    Received bags
+                </div>
+            </div>
             @foreach ($bags_received as $bag_received)
                 <div class="p-2">
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -122,7 +127,7 @@
                             <div class="grid grid-cols-5 gap-1">
                                 <div class="text-lg font-semibold mb-3">{{ $bag_received->bag_no }}</div>
                                 <span>{{ $bag_received->bagType->description }}({{ $bag_received->bagTransactionType->description }})</span>
-                                <span>From: {{ $bag_received->fromFacility->name }}</span>
+                                <span>{{ $bag_received->fromFacility->name }}</span>
                                 <span>{{ $bag_received->creator->name }}</span>
                                 <span>{{ $bag_received->created_at }}</span>
                             </div>
@@ -144,7 +149,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-gray-400 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 font-semibold">
-                        No Bags Received!
+                        No bags to open!
                     </div>
                 </div>
             </div>

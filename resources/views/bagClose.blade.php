@@ -119,7 +119,7 @@
         <div class="pt-6 pb-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="text-lg font-semibold p-4">
-                    Active bag opening scans
+                    Active bag closing scans
                 </div>
             </div>
             @foreach ($close_bags as $close_bag)
@@ -129,7 +129,7 @@
                             <div class="grid grid-cols-5 gap-1">
                                 <div class="text-lg font-semibold mb-3">{{ $close_bag->bag_no }}</div>
                                 <span>{{ $close_bag->bagType->description }}({{ $close_bag->bagTransactionType->description }})</span>
-                                <span>From: {{ $close_bag->fromFacility->name }}</span>
+                                <span>{{ $close_bag->toFacility->name }}</span>
                                 <span>{{ $close_bag->creator->name }}</span>
                                 <span>{{ $close_bag->created_at }}</span>
                             </div>
