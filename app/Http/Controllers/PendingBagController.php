@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PendingBagController extends Controller
 {
-    public function index(Request $request){
+    public function index(){
         $user = Auth::user();
         $current_facility = $user->facility;
         $active_set = $current_facility->sets()->where('is_active', true)->firstOrFail();

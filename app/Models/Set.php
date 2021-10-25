@@ -51,4 +51,8 @@ class Set extends Model
     public function bags(){
         return $this->hasMany(Bag::class);
     }
+
+    public function articles(){
+        return $this->hasMany(Article::class);
+    }
 }
