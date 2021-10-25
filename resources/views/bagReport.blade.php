@@ -13,13 +13,13 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form action="" method="get">
+                <form action="{{ route('bag-report.index') }}" method="get">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
                             <div>
                                 <div>
-                                    <label for="to_set_id" class="pt-2 text-lg font-semibold">Select Set: </label>
-                                    <select name="to_set_id" id="to_set_id" autofocus
+                                    <label for="set_id" class="pt-2 text-lg font-semibold">Select Set: </label>
+                                    <select name="set_id" id="set_id" autofocus
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                         @foreach ($sets as $set)
                                             <option value="{{ $set->id }}">
@@ -31,15 +31,15 @@
                                 </div>
                                 <div class="flex gap-16 pt-8">
                                     <div>
-                                        <label for="bag_type_id" class="pt-2 text-lg font-semibold">Bag Type: </label>
-                                        <select name="bag_type_id" id="bag_type_id"
+                                        <label for="bag_report_type" class="pt-2 text-lg font-semibold">Bag Report Type: </label>
+                                        <select name="bag_report_type" id="bag_report_type"
                                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
 
-                                            <option value="1">
+                                            <option value="receive">
                                                 Received
                                             </option>
 
-                                            <option value="2">
+                                            <option value="close">
                                                 Closed
                                             </option>
 
