@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\ArticleReportController;
-use App\Http\Controllers\BagCloseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SetController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\BagOpenController;
-use App\Http\Controllers\BagReceiveController;
+use App\Http\Controllers\BagCloseController;
 use App\Http\Controllers\ManifestController;
 use App\Http\Controllers\pdfReportController;
-use App\Http\Controllers\PendingArticleController;
+use App\Http\Controllers\BagReceiveController;
 use App\Http\Controllers\PendingBagController;
-use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ArticleReportController;
+use App\Http\Controllers\PendingArticleController;
+use App\Http\Controllers\BagReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('report', [ReportController::class, 'index'])->name('report.index');
     Route::get('manifest-report', [ManifestController::class, 'index'])->name('manifest-report.index');
     Route::get('article-report', [ArticleReportController::class, 'index'])->name('article-report.index');
+
+    Route::get('bag-report', [BagReportController::class, 'index'])->name('bag-report.index');
 
     Route::get('pending-bag', [PendingBagController::class, 'index'])->name('pending-bag.index');
     Route::get('pending-article', [PendingArticleController::class, 'index'])->name('pending-article.index');
