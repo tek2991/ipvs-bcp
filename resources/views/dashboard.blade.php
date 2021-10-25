@@ -1,7 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Bag Receive') }}
+        </h2>
+    </x-slot>
+    <x-slot name="info">
+        <h2 class="font-semibold text-m text-gray-800 leading-tight">
+            {{ __(Auth::user()->facility->name . '(' . Auth::user()->facility->facility_code . '), ' . $active_set->created_at->toDayDateTimeString()) }}
         </h2>
     </x-slot>
 

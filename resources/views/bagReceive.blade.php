@@ -4,6 +4,11 @@
             {{ __('Bag Receive') }}
         </h2>
     </x-slot>
+    <x-slot name="info">
+        <h2 class="font-semibold text-m text-gray-800 leading-tight">
+            {{ __(Auth::user()->facility->name . '(' . Auth::user()->facility->facility_code . '), ' . $active_set->created_at->toDayDateTimeString()) }}
+        </h2>
+    </x-slot>
 
     @if (session('success'))
         <div class="pt-6">
@@ -44,20 +49,6 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 font-semibold">
-                    Current Facility: {{ Auth::user()->facility->name }} -
-                    {{ Auth::user()->facility->facility_code }} <br>
-                    Current business date:
-                    {{ $active_set->created_at->toDayDateTimeString() }}
-                    <br>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <form action="{{ route('bag-receive.store') }}" method="post">
                     @csrf
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -68,7 +59,8 @@
                                     <select name="from_facility_id" id="from_facility_id" autofocus
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                         @foreach ($facilities as $facility)
-                                            <option value="{{ $facility->id }}" {{ $facility->id == old('from_facility_id') ? 'selected' : '' }}>
+                                            <option value="{{ $facility->id }}"
+                                                {{ $facility->id == old('from_facility_id') ? 'selected' : '' }}>
                                                 {{ $facility->name }}
                                             </option>
                                         @endforeach
@@ -79,7 +71,8 @@
                                     <select name="bag_type_id" id="bag_type_id"
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                         @foreach ($bag_types as $bag_type)
-                                            <option value="{{ $bag_type->id }}" {{ $bag_type->id == old('bag_type_id') ? 'selected' : '' }}>
+                                            <option value="{{ $bag_type->id }}"
+                                                {{ $bag_type->id == old('bag_type_id') ? 'selected' : '' }}>
                                                 {{ $bag_type->description }}
                                             </option>
                                         @endforeach
@@ -87,7 +80,8 @@
                                 </div>
                                 <div class="grid grid-cols-2 gap-2">
                                     <label for="bag_no" class="pt-2 text-lg font-semibold">Bag No: </label>
-                                    <input name="bag_no" id="bag_no" type="text" value="{{ $errors->any() ? old('bag_no') : '' }}"
+                                    <input name="bag_no" id="bag_no" type="text"
+                                        value="{{ $errors->any() ? old('bag_no') : '' }}"
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </input>
                                 </div>

@@ -4,6 +4,11 @@
             {{ __('Bag Close Scan') }}
         </h2>
     </x-slot>
+    <x-slot name="info">
+        <h2 class="font-semibold text-m text-gray-800 leading-tight">
+            {{ __(Auth::user()->facility->name . '(' . Auth::user()->facility->facility_code . '), ' . $active_set->created_at->toDayDateTimeString()) }}
+        </h2>
+    </x-slot>
 
     @if (session('success'))
         <div class="pt-6">
@@ -40,20 +45,6 @@
             </div>
         </div>
     @endif
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 font-semibold">
-                    Current Facility: {{ Auth::user()->facility->name }} -
-                    {{ Auth::user()->facility->facility_code }} <br>
-                    Current business date:
-                    {{ $active_set->created_at->toDayDateTimeString() }}
-                    <br>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
