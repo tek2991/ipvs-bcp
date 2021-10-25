@@ -31,7 +31,7 @@
                         <div class="p-4 bg-white border-b border-gray-200">
                             <div class="grid grid-cols-5 gap-1">
                                 <div class="text-lg font-semibold">{{ $bag->bag_no }} ({{ $bag->bagType->name }})</div>
-                                <span>({{ $bag->bagTransactionType->description }})</span>
+                                <span>{{ $bag->bagTransactionType->description }}</span>
                                 <span>{{ $bag->fromFacility->name }} -> {{ $bag->toFacility->name }}</span>
                                 <span>{{ $bag->updated_at }}</span>
                                 <span>{{ $bag->creator->name }}</span>

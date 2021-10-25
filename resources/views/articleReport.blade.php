@@ -95,7 +95,7 @@
                         <div class="p-4 bg-white border-b border-gray-200">
                             <div class="flex justify-between">
                                 <div class="text-lg font-semibold">{{ $article->article_no }} ({{ $article->articleType->name }})</div>
-                                <span>({{ $article->articleTransactionType->description }})</span>
+                                <span>{{ $article->articleTransactionType->description }}</span>
                                 <span>{{ $article->fromFacility->name }} -> {{ $article->toFacility->name }}</span>
                                 <span>{{ $article->updated_at }}</span>
                                 <span>{{ $article->updator->name }}</span>
