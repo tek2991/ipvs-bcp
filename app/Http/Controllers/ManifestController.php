@@ -25,7 +25,7 @@ class ManifestController extends Controller
             ]
         ]);
 
-        $bags = Bag::where('bag_no', $request->bag_no)->whereIn('bag_transaction_type_id', $bag_statuses);
+        $bags = Bag::where('bag_no', $request->bag_no)->whereIn('bag_transaction_type_id', $bag_statuses)->paginate();
 
         return view('manifest', compact('active_set', 'bags', 'request'));
     }

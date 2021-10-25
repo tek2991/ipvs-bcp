@@ -50,7 +50,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <form action="{{ route('manifest-report.index') }}" method="get">
-                    @csrf
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
                             <div class="grid grid-cols-2 gap-16">
@@ -74,5 +73,56 @@
             </div>
         </div>
     </div>
+
+    @if ($bags->total() > 0)
+        <div class="py-1">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="p-6">
+                    {{ $bags->links() }}
+                </div>
+            </div>
+        </div>
+
+        <div class="py-1">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="text-lg font-semibold p-4">
+                    Bags
+                </div>
+            </div>
+            @foreach ($bags as $bag)
+                <div class="p-1">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="p-4 bg-white border-b border-gray-200">
+                            <div class="grid grid-cols-5 gap-1">
+                                <div class="text-lg font-semibold">{{ $bag->bag_no }}</div>
+                                <span>{{ $bag->bagType->description }}({{ $bag->bagTransactionType->description }})</span>
+                                <span>{{ $bag->fromFacility->name }} -> {{ $bag->toFacility->name }}</span>
+                                <span>{{ $bag->updated_at }}</span>
+                                <a href="{{ route('bag-manifest', ['bag' => $bag->id]) }}" class="font-bold text-blue-800 hover:text-blue-500" target="_blank">Open</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="py-1">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="p-6">
+                    {{ $bags->links() }}
+                </div>
+            </div>
+        </div>
+    @else
+        <div class="py-1">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-gray-400 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 font-semibold">
+                        No bags found!
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
 </x-app-layout>
