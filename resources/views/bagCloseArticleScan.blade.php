@@ -11,7 +11,7 @@
     </x-slot>
 
     @if (session('success'))
-        <div class="pt-6">
+        <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-green-300 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">
@@ -23,7 +23,7 @@
     @endif
 
     @if (session('error'))
-        <div class="pt-6">
+        <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-red-300 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">
@@ -35,7 +35,7 @@
     @endif
 
     @if ($errors->any())
-        <div class="py-12">
+        <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
@@ -46,7 +46,7 @@
         </div>
     @endif
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -94,7 +94,7 @@
     </div>
 
     @if ($articles->total() > 0)
-        <div class="pt-6">
+        <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="p-6">
                     {{ $articles->links() }}
@@ -102,14 +102,14 @@
             </div>
         </div>
 
-        <div class="pt-6 pb-6">
+        <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="text-lg font-semibold p-4">
                     Scaned articles
                 </div>
             </div>
             @foreach ($articles as $article)
-                <div class="p-2">
+                <div class="py-6">
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div class="p-4 bg-white border-b border-gray-200">
                             <div class="grid grid-cols-3 gap-1">
@@ -123,9 +123,9 @@
             @endforeach
         </div>
 
-        <div class="pt-6">
+        <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="p-6">
+                <div class="py-6">
                     {{ $articles->links() }}
                 </div>
             </div>
@@ -134,7 +134,7 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-gray-400 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 font-semibold">
+                    <div class="py-6 font-semibold">
                         No articles scaned!
                     </div>
                 </div>
@@ -142,7 +142,7 @@
         </div>
     @endif
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 font-semibold">
@@ -162,7 +162,7 @@
         </div>
     </div>
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gray-400 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 font-semibold">
