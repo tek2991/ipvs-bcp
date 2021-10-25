@@ -8,6 +8,7 @@ use App\Http\Controllers\BagOpenController;
 use App\Http\Controllers\BagReceiveController;
 use App\Http\Controllers\ManifestController;
 use App\Http\Controllers\pdfReportController;
+use App\Http\Controllers\PendingBagController;
 use App\Http\Controllers\ReportController;
 
 /*
@@ -54,6 +55,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('report', [ReportController::class, 'index'])->name('report.index');
     Route::get('manifest-report', [ManifestController::class, 'index'])->name('manifest-report.index');
     Route::get('article-report', [ArticleReportController::class, 'index'])->name('article-report.index');
+
+    Route::get('pending-bag', [PendingBagController::class, 'index'])->name('pending-bag.index');
 });
 
 
