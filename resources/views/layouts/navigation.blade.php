@@ -17,7 +17,7 @@
                     </x-nav-link>
 
                     <x-nav-link :href="route('set.index')" :active="request()->routeIs('set.index')">
-                        {{ __('Set Control') }}
+                        {{ __('Set') }}
                     </x-nav-link>
                     @if (count(Auth::user()->facility->sets()->where('is_active', true)->get()) > 0)
                         <x-nav-link :href="route('bag-receive.index')" :active="request()->routeIs('bag-receive.index')">
@@ -33,8 +33,11 @@
                             {{ __('Bag Dispatch') }}
                         </x-nav-link>
                     @endif
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('report.index')" :active="request()->routeIs('report.index')">
                         {{ __('Reports') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Exports') }}
                     </x-nav-link>
                 </div>
             </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\SetController;
 use App\Http\Controllers\BagOpenController;
 use App\Http\Controllers\BagReceiveController;
 use App\Http\Controllers\pdfReportController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,8 @@ Route::middleware(['auth'])->group(function(){
     Route::delete('bag-close-article-delete-scan', [BagCloseController::class, 'articleDeleteScan'])->name('bag-close.articleDeleteScan');
 
     Route::get('manifest/{bag}', [pdfReportController::class, 'manifest'])->name('bag-manifest');
+
+    Route::get('report', [ReportController::class, 'index'])->name('report.index');
 });
 
 
