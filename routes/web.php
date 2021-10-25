@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleReportController;
 use App\Http\Controllers\BagCloseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SetController;
@@ -52,6 +53,7 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('report', [ReportController::class, 'index'])->name('report.index');
     Route::get('manifest-report', [ManifestController::class, 'index'])->name('manifest-report.index');
+    Route::get('article-report', [ArticleReportController::class, 'index'])->name('article-report.index');
 });
 
 
