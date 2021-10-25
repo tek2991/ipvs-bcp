@@ -193,6 +193,6 @@ class BagCloseController extends Controller
             'article_transaction_type_id' => $article_transaction_type_id,
         ]);
 
-        return redirect()->route('bag-close.index');
+        return redirect()->route('bag-close.index')->with('manifest', $bag);
     }
 }
