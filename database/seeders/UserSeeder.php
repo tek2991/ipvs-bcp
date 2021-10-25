@@ -338,7 +338,7 @@ class UserSeeder extends Seeder
             User::factory()->create([
                 'name' => $user['name'],
                 'username' => $user['employee_id'],
-                'facility_id' => count($facility) > 0 ? $facility->first()->id : null,
+                'facility_id' => count($facility) > 0 ? $facility->first()->id : Facility::first()->id,
                 'cadre_id' => $cadre->id,
             ]);
         }

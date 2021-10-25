@@ -96,8 +96,19 @@
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="px-6 pt-6 font-bold">
+                <div class="px-6 pt-6 font-bold text-lg">
                     <h3>Set Close</h3>
+                </div>
+                <div class="px-6 pt-6 font-bold grid grid-cols-2 gap-16">
+                    <div>
+                        <h4>Bags receive but not processed: {{ $pending_arr['bags_in_receive_status']->count() }}</h4>
+                        <h4>Bags in dispatch scan: {{ $pending_arr['bags_in_dispatch_scan_status']->count() }}</h4>
+                    </div>
+                    <div>
+                        <h4>Articles opened but not processed: {{ $pending_arr['articles_in_open_status']->count() }}</h4>
+                        <h4>Articles in opening scan: {{ $pending_arr['articles_in_open_scan_status']->count() }}</h4>
+                        <h4>Articles in closing scan: {{ $pending_arr['articles_in_close_scan_status']->count() }}</h4>
+                    </div>
                 </div>
                 <form action="{{ route('set.update') }}" method="post">
                     @csrf
