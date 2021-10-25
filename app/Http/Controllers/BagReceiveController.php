@@ -19,7 +19,8 @@ class BagReceiveController extends Controller
         $current_facility = $user->facility;
         $active_set = $current_facility->sets()->where('is_active', true)->firstOrFail();
 
-        $bags_received = $active_set->bags()->paginate();
+        $bag_statuses = BagTransactionType::whereIn('name', ['RD', 'OP_SCAN', 'OP'])->get()->modelKeys();
+        $bags_received = $active_set->bags()->whereIn('bag_transaction_type_id', $bag_statuses)->paginate();
 
         $facilities = Facility::get();
         $bag_types = BagType::get();

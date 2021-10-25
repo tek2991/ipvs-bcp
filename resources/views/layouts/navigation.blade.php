@@ -29,9 +29,9 @@
                         <x-nav-link :href="route('bag-close.index')" :active="request()->routeIs('bag-close.index')">
                             {{ __('Bag Close') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Bag Dispatch') }}
-                        </x-nav-link>
+                        </x-nav-link> --}}
                     @endif
                     <x-nav-link :href="route('report.index')" :active="request()->routeIs('report.index')">
                         {{ __('Reports') }}
@@ -74,9 +74,9 @@
                         <x-dropdown-link :href="route('logout')">
                             {{ __('Bag Close') }}
                         </x-dropdown-link>
-                        <x-dropdown-link :href="route('logout')">
+                        {{-- <x-dropdown-link :href="route('logout')">
                             {{ __('Bag Dispatch') }}
-                        </x-dropdown-link>
+                        </x-dropdown-link> --}}
                         <x-dropdown-link :href="route('logout')">
                             {{ __('Reports') }}
                         </x-dropdown-link>
@@ -128,9 +128,9 @@
             <x-responsive-nav-link :href="route('logout')">
                 {{ __('Bag Close') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('logout')">
+            {{-- <x-responsive-nav-link :href="route('logout')">
                 {{ __('Bag Dispatch') }}
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> --}}
             <x-responsive-nav-link :href="route('logout')">
                 {{ __('Reports') }}
             </x-responsive-nav-link>
