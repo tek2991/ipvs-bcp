@@ -81,7 +81,7 @@ class SetController extends Controller
         if ($pending_bags + $pending_articles > 0) {
             return redirect()
                 ->back()
-                ->with('error', 'Pending bags: ' . $pending_bags . ' Pending articles: '. $pending_articles);
+                ->with('error', 'Pending bags: ' . $pending_bags . ', Pending articles: '. $pending_articles);
         }
 
         dd($pending_bags, $pending_articles);

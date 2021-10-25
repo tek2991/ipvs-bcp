@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Article Tracking') }}
+            {{ __('Article Status') }}
         </h2>
     </x-slot>
     <x-slot name="info">
@@ -96,7 +96,7 @@
                             <div class="flex justify-between">
                                 <div class="text-lg font-semibold">{{ $article->article_no }} ({{ $article->articleType->name }})</div>
                                 <span>{{ $article->articleTransactionType->description }}</span>
-                                <span>{{ $article->fromFacility->name }} -> {{ $article->toFacility->name }}</span>
+                                <span>{{ $article->fromFacility->name }} -> {{ $article->toFacility->name }} ({{ $article->bag->bag_no }})</span>
                                 <span>{{ $article->updated_at }}</span>
                                 <span>{{ $article->updator->name }}</span>
                             </div>
