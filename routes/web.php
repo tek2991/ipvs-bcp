@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SetController;
 use App\Http\Controllers\BagOpenController;
 use App\Http\Controllers\BagReceiveController;
+use App\Http\Controllers\ManifestController;
 use App\Http\Controllers\pdfReportController;
 use App\Http\Controllers\ReportController;
 
@@ -50,6 +51,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('manifest/{bag}', [pdfReportController::class, 'manifest'])->name('bag-manifest');
 
     Route::get('report', [ReportController::class, 'index'])->name('report.index');
+    Route::get('manifest-report', [ManifestController::class, 'index'])->name('manifest-report.index');
 });
 
 

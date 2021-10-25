@@ -20,8 +20,8 @@ class BagTransactionTypeSeeder extends Seeder
             'OP' => 'Bag Open',  
             'CL_SCAN' => 'Bag Close Scan',  
             'CL' => 'Bag Close',  
-            'DI' => 'Bag Dispatch',  
             'DI_SCAN' => 'Bag Dispatch Scan',
+            'DI' => 'Bag Dispatch',  
             'TF' => 'Bag Transfer',
         ];
 
