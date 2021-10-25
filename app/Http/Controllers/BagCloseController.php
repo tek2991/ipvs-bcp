@@ -46,8 +46,8 @@ class BagCloseController extends Controller
             'bag_type_id' => 'bail|required|exists:bag_types,id',
             'bag_no' => [
                 'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{2}[sS]{1}[0-9]{10}$^',
-                Rule::unique('bags')->where(function ($query) use ($active_set) {
-                    return $query->where('set_id', $active_set->id);
+                Rule::unique('bags')->where(function ($query) use ($active_set, $bag_transaction_type_id) {
+                    return $query->where('set_id', $active_set->id)->whereNotIn('bag_transaction_type_id', [$bag_transaction_type_id]);
                 }),
                 // new BagClosingRule($active_set_id),
             ],
