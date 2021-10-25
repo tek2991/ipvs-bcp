@@ -15,24 +15,22 @@ class SetController extends Controller
         $user = Auth::user();
         $currently_active = $user->facility->sets->where('is_active', true);
         $previously_active = $user->facility->sets->where('is_active', false);
-        $active_set = $currently_active->firstOrfail();
 
-        $bag_receive_status = BagTransactionType::where('name', 'RD')->first()->id;
-        $bag_dispatch_scan_status = BagTransactionType::where('name', 'DI_SCAN')->first()->id;
-
-        $bags_in_receive_status = $active_set->bags()->where('bag_transaction_type_id', $bag_receive_status)->get();
-        $bags_in_dispatch_scan_status = $active_set->bags()->where('bag_transaction_type_id', $bag_dispatch_scan_status)->get();
-
-        $article_open_scan_status = ArticleTransactionType::where('name', 'OP_SCAN')->first()->id;
-        $article_open_status = ArticleTransactionType::where('name', 'OP')->first()->id;
-        $article_close_scan_status = ArticleTransactionType::where('name', 'CL_SCAN')->first()->id;
-
-        $articles_in_open_scan_status = $active_set->articles()->where('article_transaction_type_id', $article_open_scan_status)->get();
-        $articles_in_open_status = $active_set->articles()->where('article_transaction_type_id', $article_open_status)->get();
-        $articles_in_close_scan_status = $active_set->articles()->where('article_transaction_type_id', $article_close_scan_status)->get();
-
-        $pending_arr = compact('bags_in_receive_status', 'bags_in_dispatch_scan_status', 'articles_in_open_scan_status', 'articles_in_open_status', 'articles_in_close_scan_status');
-
+        $pending_arr = [];
+        if (count($currently_active) > 0) {
+            $active_set = $currently_active->firstOrfail();
+            $bag_receive_status = BagTransactionType::where('name', 'RD')->first()->id;
+            $bag_dispatch_scan_status = BagTransactionType::where('name', 'DI_SCAN')->first()->id;
+            $bags_in_receive_status = $active_set->bags()->where('bag_transaction_type_id', $bag_receive_status)->get();
+            $bags_in_dispatch_scan_status = $active_set->bags()->where('bag_transaction_type_id', $bag_dispatch_scan_status)->get();
+            $article_open_scan_status = ArticleTransactionType::where('name', 'OP_SCAN')->first()->id;
+            $article_open_status = ArticleTransactionType::where('name', 'OP')->first()->id;
+            $article_close_scan_status = ArticleTransactionType::where('name', 'CL_SCAN')->first()->id;
+            $articles_in_open_scan_status = $active_set->articles()->where('article_transaction_type_id', $article_open_scan_status)->get();
+            $articles_in_open_status = $active_set->articles()->where('article_transaction_type_id', $article_open_status)->get();
+            $articles_in_close_scan_status = $active_set->articles()->where('article_transaction_type_id', $article_close_scan_status)->get();
+            $pending_arr = compact('bags_in_receive_status', 'bags_in_dispatch_scan_status', 'articles_in_open_scan_status', 'articles_in_open_status', 'articles_in_close_scan_status');
+        }
         return view('set', compact('currently_active', 'previously_active', 'pending_arr'));
     }
 

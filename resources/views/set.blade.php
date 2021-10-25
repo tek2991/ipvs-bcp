@@ -99,6 +99,7 @@
                 <div class="px-6 pt-6 font-bold text-lg">
                     <h3>Set Close</h3>
                 </div>
+                @if (count($pending_arr) > 0)
                 <div class="px-6 pt-6 font-bold grid grid-cols-2 gap-16">
                     <div>
                         <h4>Bags receive but not processed: {{ $pending_arr['bags_in_receive_status']->count() }}</h4>
@@ -110,6 +111,7 @@
                         <h4>Articles in closing scan: {{ $pending_arr['articles_in_close_scan_status']->count() }}</h4>
                     </div>
                 </div>
+                @endif
                 <form action="{{ route('set.update') }}" method="post">
                     @csrf
                     @method('PUT')
