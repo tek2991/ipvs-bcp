@@ -12,6 +12,7 @@ use App\Http\Controllers\PendingBagController;
 use App\Http\Controllers\ArticleReportController;
 use App\Http\Controllers\PendingArticleController;
 use App\Http\Controllers\BagReportController;
+use App\Http\Controllers\ExportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,8 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('pending-bag', [PendingBagController::class, 'index'])->name('pending-bag.index');
     Route::get('pending-article', [PendingArticleController::class, 'index'])->name('pending-article.index');
+
+    Route::get('export', [ExportController::class, 'index'])->name('export.index');
 });
 
 
