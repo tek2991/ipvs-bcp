@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('article-report', [ArticleReportController::class, 'index'])->name('article-report.index');
 
     Route::get('bag-report', [BagReportController::class, 'index'])->name('bag-report.index');
+    Route::post('bag-report', [BagReportController::class, 'store'])->name('bag-report.store');
 
     Route::get('pending-bag', [PendingBagController::class, 'index'])->name('pending-bag.index');
     Route::get('pending-article', [PendingArticleController::class, 'index'])->name('pending-article.index');
