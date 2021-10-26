@@ -10,7 +10,7 @@ class ReportController extends Controller
     public function index(){
         $user = Auth::user();
         $current_facility = $user->facility;
-        $active_set = $current_facility->sets()->where('is_active', true)->firstOrFail();
+        $active_set = $current_facility->sets()->where('is_active', true)->get();
         return view('report', compact('active_set'));
     }
 }

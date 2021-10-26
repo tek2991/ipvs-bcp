@@ -6,7 +6,10 @@
     </x-slot>
     <x-slot name="info">
         <h2 class="font-semibold text-m text-gray-800 leading-tight">
-            {{ __(Auth::user()->facility->name . '(' . Auth::user()->facility->facility_code . '), ' . $active_set->created_at->toDayDateTimeString()) }}
+            @php
+                $active_set_text = count($active_set) > 0 ? $active_set->created_at->toDayDateTimeString() : 'No active set';
+            @endphp
+            {{ __(Auth::user()->facility->name . '(' . Auth::user()->facility->facility_code . '), ' . $active_set_text) }}
         </h2>
     </x-slot>
 
@@ -94,9 +97,11 @@
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div class="p-4 bg-white border-b border-gray-200">
                             <div class="flex justify-between">
-                                <div class="text-lg font-semibold">{{ $article->article_no }} ({{ $article->articleType->name }})</div>
+                                <div class="text-lg font-semibold">{{ $article->article_no }}
+                                    ({{ $article->articleType->name }})</div>
                                 <span>{{ $article->articleTransactionType->description }}</span>
-                                <span>{{ $article->fromFacility->name }} -> {{ $article->toFacility->name }} ({{ $article->bag->bag_no }})</span>
+                                <span>{{ $article->fromFacility->name }} -> {{ $article->toFacility->name }}
+                                    ({{ $article->bag->bag_no }})</span>
                                 <span>{{ $article->updated_at }}</span>
                                 <span>{{ $article->updator->name }}</span>
                             </div>

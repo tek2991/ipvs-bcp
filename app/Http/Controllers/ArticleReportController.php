@@ -11,7 +11,7 @@ class ArticleReportController extends Controller
     public function index(Request $request){
         $user = Auth::user();
         $current_facility = $user->facility;
-        $active_set = $current_facility->sets()->where('is_active', true)->firstOrFail();
+        $active_set = $current_facility->sets()->where('is_active', true)->get();
 
         $this->validate($request, [
             'article_no' => 'nullable|exists:articles'

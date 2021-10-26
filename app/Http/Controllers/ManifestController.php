@@ -13,7 +13,7 @@ class ManifestController extends Controller
     public function index(Request $request){
         $user = Auth::user();
         $current_facility = $user->facility;
-        $active_set = $current_facility->sets()->where('is_active', true)->firstOrFail();
+        $active_set = $current_facility->sets()->where('is_active', true)->get();
 
         $bag_statuses = BagTransactionType::whereIn('name', ['CL', 'DI'])->get()->modelKeys();
 

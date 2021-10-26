@@ -6,7 +6,10 @@
     </x-slot>
     <x-slot name="info">
         <h2 class="font-semibold text-m text-gray-800 leading-tight">
-            {{ __(Auth::user()->facility->name . '(' . Auth::user()->facility->facility_code . '), ' . $active_set->created_at->toDayDateTimeString()) }}
+            @php
+                $active_set_text = count($active_set) > 0 ? $active_set->created_at->toDayDateTimeString() : 'No active set';
+            @endphp
+            {{ __(Auth::user()->facility->name . '(' . Auth::user()->facility->facility_code . '), ' . $active_set_text) }}
         </h2>
     </x-slot>
 
@@ -55,8 +58,7 @@
                             <div class="grid grid-cols-2 gap-16">
                                 <div class="grid grid-cols-2 gap-2">
                                     <label for="bag_no" class="pt-2 text-lg font-semibold">Bag No: </label>
-                                    <input name="bag_no" id="bag_no" type="text"
-                                        value="{{ $request->bag_no }}"
+                                    <input name="bag_no" id="bag_no" type="text" value="{{ $request->bag_no }}"
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </input>
                                 </div>
@@ -98,7 +100,8 @@
                                 <span>{{ $bag->bagType->description }}({{ $bag->bagTransactionType->description }})</span>
                                 <span>{{ $bag->fromFacility->name }} -> {{ $bag->toFacility->name }}</span>
                                 <span>{{ $bag->updated_at }}</span>
-                                <a href="{{ route('bag-manifest', ['bag' => $bag->id]) }}" class="font-bold text-blue-800 hover:text-blue-500" target="_blank">Open</a>
+                                <a href="{{ route('bag-manifest', ['bag' => $bag->id]) }}"
+                                    class="font-bold text-blue-800 hover:text-blue-500" target="_blank">Open</a>
                             </div>
                         </div>
                     </div>
