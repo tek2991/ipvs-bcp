@@ -35,18 +35,17 @@ class ExportController extends Controller
             $bag_status_ids = BagTransactionType::whereIn('name', $bag_status_names)->get()->modelKeys();
             $bags = $set->bags()->whereIn('bag_transaction_type_id', $bag_status_ids)->with('bagType', 'bagTransactionType')->get();
             
-            $status = $request->report_type == 'bag_receive' ? 'RD' : 'DI';
             $name = $set->facility->facility_code.'_'.'GEN1'.'_'.date_format($set->updated_at, "YmdHi").'.xlsx';
-            // dd($name, $bags);
+            $status = $request->report_type == 'bag_receive' ? 'RD' : 'DI';
             return Excel::download(new BagExport($bags, $status), $name);
         }else{
             $article_status_names = $request->report_type == 'article_open' ? ['OP', 'CL'] : ['CL'];
             $article_status_ids = ArticleTransactionType::whereIn('name', $article_status_names)->get()->modelKeys();
-            $articles = $set->articles()->whereIn('article_transaction_type_id', $article_status_ids)->with('articleType', 'articleTransactionType')->get();
+            $articles = $set->articles()->whereIn('article_transaction_type_id', $article_status_ids)->with('bag', 'articleType', 'articleTransactionType')->get();
 
             $name = $set->facility->facility_code.'_'.'GEN1'.'_'.date_format($set->updated_at, "YmdHi").'.xlsx';
-            dd($name, $articles);
-            return Excel::download(new ArticleExport($articles), $name);
+            $status = $request->report_type == 'article_open' ? 'OP' : 'CL';
+            return Excel::download(new ArticleExport($articles, $status), $name);
         }
     }
 }
