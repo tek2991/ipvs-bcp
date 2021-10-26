@@ -13,7 +13,7 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form action="{{ route('bag-report.store') }}" method="post">
+                <form action="{{ route('export.export') }}" method="post">
                     @csrf
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
@@ -33,8 +33,8 @@
                                 </div>
                                 <div class="flex gap-16 pt-8">
                                     <div>
-                                        <label for="bag_report_type" class="pt-2 text-lg font-semibold">Bag Report Type: </label>
-                                        <select name="bag_report_type" id="bag_report_type"
+                                        <label for="report_type" class="pt-2 text-lg font-semibold">Bag Report Type: </label>
+                                        <select name="report_type" id="report_type"
                                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
 
                                             <option value="bag_receive">

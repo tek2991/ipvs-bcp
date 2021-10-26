@@ -66,6 +66,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('pending-article', [PendingArticleController::class, 'index'])->name('pending-article.index');
 
     Route::get('export', [ExportController::class, 'index'])->name('export.index');
+    Route::post('export', [ExportController::class, 'export'])->name('export.export');
 });
 
 
