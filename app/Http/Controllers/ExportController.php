@@ -35,9 +35,10 @@ class ExportController extends Controller
             $bag_status_ids = BagTransactionType::whereIn('name', $bag_status_names)->get()->modelKeys();
             $bags = $set->bags()->whereIn('bag_transaction_type_id', $bag_status_ids)->with('bagType', 'bagTransactionType')->get();
             
+            $status = $request->report_type == 'bag_receive' ? 'RD' : 'DI';
             $name = $set->facility->facility_code.'_'.'GEN1'.'_'.date_format($set->updated_at, "YmdHi").'.xlsx';
             // dd($name, $bags);
-            return Excel::download(new BagExport($bags), $name);
+            return Excel::download(new BagExport($bags, $status), $name);
         }else{
             $article_status_names = $request->report_type == 'article_open' ? ['OP', 'CL'] : ['CL'];
             $article_status_ids = ArticleTransactionType::whereIn('name', $article_status_names)->get()->modelKeys();
