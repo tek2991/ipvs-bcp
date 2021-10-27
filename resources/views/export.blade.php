@@ -23,7 +23,10 @@
                                     <select name="set_id" id="set_id" autofocus
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                         @foreach ($sets as $set)
-                                            <option value="{{ $set->id }}">
+                                            <option 
+                                            value="{{ $set->id }}"
+                                            {{ $set->created_at == $set->updated_at ? 'disabled' : '' }}
+                                            >
                                                 {{ $set->facility->name }}, 
                                                 {{ $set->created_at->toDayDateTimeString() }} to
                                                 {{ $set->created_at != $set->updated_at ? $set->updated_at->toDayDateTimeString() : 'Current' }}
