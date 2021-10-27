@@ -3,7 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Bag Close') }}
         </h2>
-    </x-slot>
+    </x-slot> 
     <x-slot name="info">
         <h2 class="font-semibold text-m text-gray-800 leading-tight">
             {{ __(Auth::user()->facility->name . '(' . Auth::user()->facility->facility_code . '), ' . $active_set->created_at->toDayDateTimeString()) }}
@@ -27,11 +27,15 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-green-300 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">
-                        Bag no {{ session('manifest')->bag_no }} closed successfully. <a href="{{ route('bag-manifest', ['bag' => session('manifest')->id]) }}" class="font-bold text-blue-800 hover:text-blue-500" target="_blank">Open</a>
+                        Bag no {{ session('manifest')->bag_no }} closed successfully. <a id="click" href="{{ route('bag-manifest', ['bag' => session('manifest')->id]) }}" class="font-bold text-blue-800 hover:text-blue-500" target="_blank">Open</a>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            let btn = document.getElementById('click');
+            btn.click();
+        </script>
     @endif
 
     @if (session('error'))
