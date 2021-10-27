@@ -18,6 +18,7 @@ class FacilitySeeder extends Seeder
     public function run()
     {
         $facilities = [
+            ['id' => 'RM122500000001', 'name' => 'RMS GH Division', 'district' => 'KAMRUP METROPOLITAN', 'pincode' => '781001', 'circle' => 'Assam', 'type' => 'RM'],
             ['id' => 'PH12150000761', 'name' => 'Jorhat PH', 'district' => 'JORHAT', 'pincode' => '785001', 'circle' => 'Assam', 'type' => 'PH'],
             ['id' => 'PH12150000762', 'name' => 'Silchar PH', 'district' => 'CACHAR', 'pincode' => '788003', 'circle' => 'Assam', 'type' => 'PH'],
             ['id' => 'PH12150000763', 'name' => 'Tinsukia PH', 'district' => 'TINSUKIA', 'pincode' => '786125', 'circle' => 'Assam', 'type' => 'PH'],
