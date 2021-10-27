@@ -61,7 +61,7 @@ class BagOpenController extends Controller
             'updated_by' => $user->id,
         ]);
 
-        $articles = $bag->articles()->orderBy('created_at', 'desc')->paginate();
+        $articles = $bag->articles()->with('articleType')->orderBy('created_at', 'desc')->paginate();
 
         return view('bagOpenArticleScan', compact('active_set', 'request', 'article_types', 'bag', 'articles'));
     }

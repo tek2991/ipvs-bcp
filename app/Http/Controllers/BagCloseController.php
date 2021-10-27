@@ -67,7 +67,7 @@ class BagCloseController extends Controller
         }
         
         $bag = Bag::where('bag_no', $request->bag_no)->where('set_id', $active_set->id)->where('bag_transaction_type_id', $bag_transaction_type_id)->firstOrFail();
-        $articles = $bag->articles()->orderBy('created_at', 'desc')->paginate();
+        $articles = $bag->articles()->with('articleType')->orderBy('created_at', 'desc')->paginate();
 
         return view('bagCloseArticleScan', compact('active_set', 'request', 'bag', 'articles', 'article_types'));
     }
