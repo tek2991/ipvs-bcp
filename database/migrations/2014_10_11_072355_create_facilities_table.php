@@ -15,7 +15,7 @@ class CreateFacilitiesTable extends Migration
     {
         Schema::create('facilities', function (Blueprint $table) {
             $table->id();
-            $table->string('facility_code');
+            $table->string('facility_code')->unique();
             $table->string('name');
             $table->string('pincode');
             $table->foreignId('facility_type_id')->constrained();
