@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img src="{{url('/img/India_Post_Logo.png')}}" alt="India Post Logo" class="w-24">
+                        <img src="{{ url('/img/India_Post_Logo.png') }}" alt="India Post Logo" class="w-24">
                     </a>
                 </div>
 
@@ -19,8 +19,11 @@
                     <x-nav-link :href="route('set.index')" :active="request()->routeIs('set.index')">
                         {{ __('Set') }}
                     </x-nav-link>
-                    @if (count(Auth::user()->facility->sets()->where('is_active', true)->get()) > 0)
-                        <x-nav-link :href="route('bag-receive.index')" :active="request()->routeIs('bag-receive.index')">
+                    @if (count(
+        Auth::user()->facility->sets()->where('is_active', true)->get(),
+    ) > 0)
+                        <x-nav-link :href="route('bag-receive.index')"
+                            :active="request()->routeIs('bag-receive.index')">
                             {{ __('Bag Receive') }}
                         </x-nav-link>
                         <x-nav-link :href="route('bag-open.index')" :active="request()->routeIs('bag-open.index')">
@@ -62,26 +65,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('logout')">
-                            {{ __('Set Control') }}
-                        </x-dropdown-link>
-                        <x-dropdown-link :href="route('logout')">
-                            {{ __('Bag Receive') }}
-                        </x-dropdown-link>
-                        <x-dropdown-link :href="route('logout')">
-                            {{ __('Bag Open') }}
-                        </x-dropdown-link>
-                        <x-dropdown-link :href="route('logout')">
-                            {{ __('Bag Close') }}
-                        </x-dropdown-link>
-                        {{-- <x-dropdown-link :href="route('logout')">
-                            {{ __('Bag Dispatch') }}
-                        </x-dropdown-link> --}}
-                        <x-dropdown-link :href="route('logout')">
-                            {{ __('Reports') }}
-                        </x-dropdown-link>
                         <!-- Authentication -->
-                        <br>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -113,26 +97,36 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('logout')">
-                {{ __('Set Control') }}
+
+            <x-responsive-nav-link :href="route('set.index')" :active="request()->routeIs('set.index')">
+                {{ __('Set') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('logout')">
-                {{ __('Bag Receive') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('logout')">
-                {{ __('Bag Open') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('logout')">
-                {{ __('Bag Close') }}
-            </x-responsive-nav-link>
-            {{-- <x-responsive-nav-link :href="route('logout')">
-                {{ __('Bag Dispatch') }}
-            </x-responsive-nav-link> --}}
-            <x-responsive-nav-link :href="route('logout')">
+            @if (count(
+        Auth::user()->facility->sets()->where('is_active', true)->get(),
+    ) > 0)
+                <x-responsive-nav-link :href="route('bag-receive.index')"
+                    :active="request()->routeIs('bag-receive.index')">
+                    {{ __('Bag Receive') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('bag-open.index')" :active="request()->routeIs('bag-open.index')">
+                    {{ __('Bag Open') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('bag-close.index')" :active="request()->routeIs('bag-close.index')">
+                    {{ __('Bag Close') }}
+                </x-responsive-nav-link>
+                {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Bag Dispatch') }}
+                </x-nav-link> --}}
+            @endif
+            <x-responsive-nav-link :href="route('report.index')" :active="request()->routeIs('report.index')">
                 {{ __('Reports') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('export.index')" :active="request()->routeIs('export.index')">
+                {{ __('Exports') }}
             </x-responsive-nav-link>
         </div>
 
