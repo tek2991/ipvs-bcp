@@ -6,7 +6,7 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class ArticleExport implements FromCollection, WithHeadings, WithMapping
+class ArticleCloseExport implements FromCollection, WithHeadings, WithMapping
 {
     protected $articles;
     protected $status;
@@ -39,10 +39,10 @@ class ArticleExport implements FromCollection, WithHeadings, WithMapping
     public function map($article): array
     {
         return [
-            $article->bag->bag_no,
-            $article->bag->fromFacility->facility_code,
+            $article->closingBag->bag_no,
+            $article->closingBag->toFacility->facility_code,
             $this->status,
-            $article->bag->bagType->name,
+            $article->closingBag->bagType->name,
             $article->article_no,
             $article->articleType->name,
             $article->is_insured == true ? 'Y' : 'N',

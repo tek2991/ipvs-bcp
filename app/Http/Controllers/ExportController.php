@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Set;
 use App\Exports\BagExport;
 use Illuminate\Http\Request;
-use App\Exports\ArticleExport;
 use App\Models\BagTransactionType;
+use App\Exports\ArticleCloseExport;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ArticleReceiveExport;
 use App\Models\ArticleTransactionType;
 
 class ExportController extends Controller
@@ -42,12 +43,18 @@ class ExportController extends Controller
         }else{
             $article_status_names = $request->report_type == 'article_open' ? ['OP', 'CL'] : ['CL'];
             $article_status_ids = ArticleTransactionType::whereIn('name', $article_status_names)->get()->modelKeys();
-            $articles = $set->articles()->whereIn('article_transaction_type_id', $article_status_ids)->with('bag', 'articleType', 'articleTransactionType')->get();
 
             $date_time = $request->report_type == 'article_open' ? $set->updated_at->addMinute(2) : $set->updated_at->addMinute(3);
             $name = $set->facility->facility_code.'_'.'GEN1'.'_'.date_format($date_time, "YmdHi").'.xlsx';
             $status = $request->report_type == 'article_open' ? 'OP' : 'CL';
-            return Excel::download(new ArticleExport($articles, $status), $name);
+
+            if($request->report_type == 'article_open'){
+                $articles = $set->articles()->whereIn('article_transaction_type_id', $article_status_ids)->with('openingBag.fromFacility', 'articleType', 'articleTransactionType')->get();
+                return Excel::download(new ArticleReceiveExport($articles, $status), $name);
+            }else{
+                $articles = $set->articles()->whereIn('article_transaction_type_id', $article_status_ids)->with('closingBag.toFacility', 'articleType', 'articleTransactionType')->get();
+                return Excel::download(new ArticleCloseExport($articles, $status), $name);
+            }
         }
     }
 }
