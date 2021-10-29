@@ -22,7 +22,7 @@ class BagReceiveController extends Controller
         $bag_statuses = BagTransactionType::whereIn('name', ['RD', 'OP_SCAN', 'OP'])->get()->modelKeys();
         $bags_received = $active_set->bags()->whereIn('bag_transaction_type_id', $bag_statuses)->paginate();
 
-        $facilities = Facility::get();
+        $facilities = Facility::orderBy('name')->get();
         $bag_types = BagType::get();
 
         $bags = Bag::paginate();

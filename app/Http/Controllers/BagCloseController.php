@@ -23,7 +23,7 @@ class BagCloseController extends Controller
         $user = Auth::user();
         $current_facility = $user->facility;
         $active_set = $current_facility->sets()->where('is_active', true)->firstOrFail();
-        $facilities = Facility::get();
+        $facilities = Facility::orderBy('name')->get();
         $bag_types = BagType::get();
 
         $bag_statuses = BagTransactionType::whereIn('name', ['CL_SCAN'])->get()->modelKeys();

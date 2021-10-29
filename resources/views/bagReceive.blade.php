@@ -61,7 +61,7 @@
                                         @foreach ($facilities as $facility)
                                             <option value="{{ $facility->id }}"
                                                 {{ $facility->id == old('from_facility_id') ? 'selected' : '' }}>
-                                                {{ $facility->name }}
+                                                {{ $facility->name }} {{ $facility->pincode }}
                                             </option>
                                         @endforeach
                                     </select>
