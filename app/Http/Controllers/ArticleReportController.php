@@ -6,10 +6,12 @@ use App\Models\Set;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ArticleTransactionType;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class ArticleReportController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $user = Auth::user();
         $current_facility = $user->facility;
         $sets = $current_facility->sets()->orderBy('created_at', 'desc')->get();
@@ -19,7 +21,8 @@ class ArticleReportController extends Controller
         return view('articleReport', compact('sets'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $user = Auth::user();
         $current_facility = $user->facility;
 
@@ -31,15 +34,19 @@ class ArticleReportController extends Controller
         $article_status_ids = ArticleTransactionType::whereIn('name', $article_statuses)->get()->modelKeys();
         $set = Set::find($request->set_id);
 
-        if($request->article_report_type == 'open'){
+        if ($request->article_report_type == 'open') {
             $articles = $set->articles()->whereIn('article_transaction_type_id', $article_status_ids)->get();
-            return view('pdf.ArticleOpenReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
-        }else{
+            $pdf = PDF::loadView('pdf.ArticleOpenReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
+            return $pdf->download('article_open_report_' . $set->id . '.pdf');
+            // return view('pdf.ArticleOpenReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
+        } else {
             $articles = $set->articles()->whereIn('article_transaction_type_id', $article_status_ids)->get();
             return view('pdf.ArticleCloseReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
+            $pdf = PDF::loadView('pdf.ArticleCloseReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
+            return $pdf->download('article_close_report_' . $set->id . '.pdf');
         }
 
-        
+
         // $pdf = PDF::loadView('pdf.manifest', ['bag' => $bag,]);
         // return $pdf->download('manifest_' . $bag->bag_no . '.pdf');
 
