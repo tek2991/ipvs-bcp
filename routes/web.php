@@ -12,6 +12,7 @@ use App\Http\Controllers\pdfReportController;
 use App\Http\Controllers\BagReceiveController;
 use App\Http\Controllers\PendingBagController;
 use App\Http\Controllers\ArticleDetailController;
+use App\Http\Controllers\ArticleReportController;
 use App\Http\Controllers\PendingArticleController;
 
 /*
@@ -61,6 +62,9 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('bag-report', [BagReportController::class, 'index'])->name('bag-report.index');
     Route::post('bag-report', [BagReportController::class, 'store'])->name('bag-report.store');
+
+    Route::get('article-report', [ArticleReportController::class, 'index'])->name('article-report.index');
+    Route::post('article-report', [ArticleReportController::class, 'store'])->name('article-report.store');
 
     Route::get('pending-bag', [PendingBagController::class, 'index'])->name('pending-bag.index');
     Route::get('pending-article', [PendingArticleController::class, 'index'])->name('pending-article.index');
