@@ -6,7 +6,7 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ArticleReportController extends Controller
+class ArticleDetailController extends Controller
 {
     public function index(Request $request){
         $user = Auth::user();
@@ -19,6 +19,6 @@ class ArticleReportController extends Controller
 
         $article_rows = Article::where('article_no', $request->article_no)->orderBy('updated_at')->paginate();
 
-        return view('articleReport', compact('active_set', 'request', 'article_rows'));
+        return view('articleDetail', compact('active_set', 'request', 'article_rows'));
     }
 }
