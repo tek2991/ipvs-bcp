@@ -107,9 +107,12 @@
                                     </input>
                                 </div>
 
-                                <div class="mt-6">
-                                    <button type="submit"
-                                        class="inline-flex items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Submit</button>
+                                <div class="mt-6 grid grid-cols-2">
+                                    <div>
+                                        <button type="submit"
+                                            class="inline-flex items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Submit</button>
+                                    </div>
+                                    <div>Total Articles: {{ $articles->total() }}</div>
                                 </div>
                             </div>
                         </form>
@@ -204,7 +207,7 @@
                             <div class="grid grid-cols-2 gap-16">
                                 <label for="article_no_for_delete" class="pt-2 text-lg font-semibold">Article
                                     No:</label>
-                                <input name="article_no_for_delete" id="article_no_for_delete" type="text" autofocus
+                                <input name="article_no_for_delete" id="article_no_for_delete" type="text"
                                     value="{{ $errors->any() ? old('article_no_for_delete') : '' }}"
                                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 </input>
