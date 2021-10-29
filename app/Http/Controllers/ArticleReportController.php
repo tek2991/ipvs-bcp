@@ -38,18 +38,10 @@ class ArticleReportController extends Controller
             $articles = $set->articles()->whereIn('article_transaction_type_id', $article_status_ids)->get();
             $pdf = PDF::loadView('pdf.ArticleOpenReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
             return $pdf->download('article_open_report_' . $set->id . '.pdf');
-            // return view('pdf.ArticleOpenReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
         } else {
             $articles = $set->articles()->whereIn('article_transaction_type_id', $article_status_ids)->get();
-            return view('pdf.ArticleCloseReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
             $pdf = PDF::loadView('pdf.ArticleCloseReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
             return $pdf->download('article_close_report_' . $set->id . '.pdf');
         }
-
-
-        // $pdf = PDF::loadView('pdf.manifest', ['bag' => $bag,]);
-        // return $pdf->download('manifest_' . $bag->bag_no . '.pdf');
-
-        // return view('pdf.bagReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
     }
 }

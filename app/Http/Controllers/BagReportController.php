@@ -6,10 +6,12 @@ use App\Models\BagTransactionType;
 use App\Models\Set;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class BagReportController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $user = Auth::user();
         $current_facility = $user->facility;
         $sets = $current_facility->sets()->orderBy('created_at', 'desc')->get();
@@ -19,7 +21,8 @@ class BagReportController extends Controller
         return view('bagReport', compact('sets'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $user = Auth::user();
         $current_facility = $user->facility;
 
@@ -32,9 +35,9 @@ class BagReportController extends Controller
         $set = Set::find($request->set_id);
         $bags = $set->bags()->whereIn('bag_transaction_type_id', $bag_status_ids)->get();
 
-        // $pdf = PDF::loadView('pdf.manifest', ['bag' => $bag,]);
-        // return $pdf->download('manifest_' . $bag->bag_no . '.pdf');
+        $pdf = PDF::loadView('pdf.bagReport', compact('bags', 'set', 'request', 'user', 'current_facility'));
+        return $pdf->download('bag' . $request->bag_report_type . '_report' . '.pdf');
 
-        return view('pdf.bagReport', compact('bags', 'set', 'request', 'user', 'current_facility'));
+        // return view('pdf.bagReport', compact('bags', 'set', 'request', 'user', 'current_facility'));
     }
 }
