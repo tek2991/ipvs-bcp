@@ -165,6 +165,7 @@ class BagCloseController extends Controller
         return redirect()
             ->back()
             ->withInput()
+            ->with('scroll', true)
             ->with('success', 'Article removed from list: ' . $request->article_no_for_delete);
     }
 

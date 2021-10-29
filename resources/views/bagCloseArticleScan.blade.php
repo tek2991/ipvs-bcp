@@ -10,6 +10,17 @@
         </h2>
     </x-slot>
 
+    @if (session('scroll') || session('success') || session('error') || $errors->any())
+        <script>
+            // This prevents the page from scrolling down to where it was previously.
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            // This is needed if the user scrolls down during page load and you want to make sure the page is scrolled to the top once it's fully loaded. This has Cross-browser support.
+            window.scrollTo(0, 0);
+        </script>
+    @endif
+
     @if (session('success'))
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
