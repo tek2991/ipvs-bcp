@@ -243,7 +243,6 @@ class UserSeeder extends Seeder
             ['facility_id' => 'TM12250000508', 'employee_id' => '10128957', 'cadre' => 'Multi Tasking Staff', 'name' => 'Someswar Sutradhar',],
             ['facility_id' => 'MO12250000551', 'employee_id' => '10128962', 'cadre' => 'Sorting Assistant', 'name' => 'Sucheta Talukdar',],
             ['facility_id' => 'HR12250100000', 'employee_id' => '10128963', 'cadre' => 'Mail Guard', 'name' => 'Suk Charan Daimary',],
-            ['facility_id' => 'HR12250100000', 'employee_id' => '10128964', 'cadre' => 'Sorting Assistant', 'name' => 'Sukumar Baishya',],
             ['facility_id' => 'HR12250100000', 'employee_id' => '10128964', 'cadre' => 'HSG II', 'name' => 'Sukumar Baishya',],
             ['facility_id' => 'TM12250000501', 'employee_id' => '10128965', 'cadre' => 'Multi Tasking Staff', 'name' => 'Suren Chandra Namasudra',],
             ['facility_id' => 'MO12250000551', 'employee_id' => '10128966', 'cadre' => 'SA LSG', 'name' => 'Suren Keot',],
