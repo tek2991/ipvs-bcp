@@ -13,6 +13,7 @@ use App\Http\Controllers\BagReceiveController;
 use App\Http\Controllers\PendingBagController;
 use App\Http\Controllers\ArticleDetailController;
 use App\Http\Controllers\ArticleReportController;
+use App\Http\Controllers\InsuredReportController;
 use App\Http\Controllers\PendingArticleController;
 
 /*
@@ -65,6 +66,9 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('article-report', [ArticleReportController::class, 'index'])->name('article-report.index');
     Route::post('article-report', [ArticleReportController::class, 'store'])->name('article-report.store');
+
+    Route::get('insured-report', [InsuredReportController::class, 'index'])->name('insured-report.index');
+    Route::post('insured-report', [InsuredReportController::class, 'store'])->name('insured-report.store');
 
     Route::get('pending-bag', [PendingBagController::class, 'index'])->name('pending-bag.index');
     Route::get('pending-article', [PendingArticleController::class, 'index'])->name('pending-article.index');

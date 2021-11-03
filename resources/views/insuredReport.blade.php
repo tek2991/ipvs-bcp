@@ -13,7 +13,7 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form action="{{ route('article-report.store') }}" method="post">
+                <form action="{{ route('insured-report.store') }}" method="post">
                     @csrf
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
@@ -36,11 +36,11 @@
                                         <select name="article_report_type" id="article_report_type"
                                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
 
-                                            <option value="open">
+                                            <option value="open(Insured)">
                                                 Opened
                                             </option>
 
-                                            <option value="close">
+                                            <option value="close(Insured)">
                                                 Closed
                                             </option>
 

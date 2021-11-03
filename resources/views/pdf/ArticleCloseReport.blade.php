@@ -157,21 +157,21 @@
                             {{ $index + 1 }}.
                         </td>
                         <td>
-                            {{ $item->article_no }}
+                            {{ $item->article_no }}{{ $item->is_insured == true ? '*': '' }}
                         </td>
                     @elseif ($col_no == 2)
                         <td>
                             {{ $index + 1 }}.
                         </td>
                         <td>
-                            {{ $item->article_no }}
+                            {{ $item->article_no }}{{ $item->is_insured == true ? '*': '' }}
                         </td>
                     @else
                         <td>
                             {{ $index + 1 }}.
                         </td>
                         <td>
-                            {{ $item->article_no }}
+                            {{ $item->article_no }}{{ $item->is_insured == true ? '*': '' }}
                         </td>
                     </tr>
                 @endif
