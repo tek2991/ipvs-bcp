@@ -12,12 +12,12 @@
             max-width: 800px;
             margin: auto;
             padding: 30px;
-            /* border: 1px solid #eee; */
+            /* border: 1px solid #ffffff; */
             /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); */
             font-size: 16px;
             line-height: 24px;
-            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-            color: #555;
+            /* font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; */
+            color: rgb(0, 0, 0);
         }
 
         .invoice-box table {
@@ -50,7 +50,7 @@
         .invoice-box table tr.top table td.title {
             font-size: 45px;
             line-height: 45px;
-            color: #333;
+            color: rgb(0, 0, 0);
         }
 
         .invoice-box table tr.information table td {
@@ -58,8 +58,9 @@
         }
 
         .invoice-box table tr.heading td {
-            background: #eee;
-            border-bottom: 1px solid #ddd;
+            /* background: #ffffff; */
+            border-bottom: 2px solid rgb(0, 0, 0);
+            border-top: 2px solid rgb(0, 0, 0);
             font-weight: bold;
         }
 
@@ -68,7 +69,7 @@
         }
 
         .invoice-box table tr.item td {
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgb(0, 0, 0);
         }
 
         .invoice-box table tr.item.last td {
@@ -76,7 +77,7 @@
         }
 
         .invoice-box table tr.total td:nth-child(2) {
-            border-top: 2px solid #eee;
+            border-top: 2px solid #ffffff;
             font-weight: bold;
         }
 
@@ -117,20 +118,22 @@
             <tr>
                 <th style="text-align: left">
                     Bag Manifest <br>
-                    From: {{ $bag->fromFacility->name }} {{ $bag->fromFacility->facility_code }} <br>
+                    From: {{ $bag->fromFacility->name }}<br>
                     Bag Number: {{ $bag->bag_no }}
                 </th>
 
                 <th style="text-align: right">
                     Created By: {{ $bag->updator->name }} <br>
-                    To: {{ $bag->toFacility->name }} {{ $bag->toFacility->facility_code }} <br>
-                    Closed at: {{ $bag->updated_at->toDayDateTimeString() }}
+                    To: {{ $bag->toFacility->name }}<br>
+                    Closed at: {{ $bag->updated_at }}
                 </th>
             </tr>
         </table>
 
 
         <table cellpadding="0" cellspacing="0">
+
+            <tr><td></td></tr>
 
             <tr class="heading">
                 <td>Sl No.</td>
@@ -157,22 +160,17 @@
                         </td>
                     </tr>
                 @endif
-                {{-- <tr class="item">
-                    <td>
-                        {{ $index + 1 }}
-                    </td>
-                    <td>
-                        <strong>{{ $item->article_no }}</strong>
-                    </td>
-                </tr> --}}
             @endforeach
 
 
-            <tr class="total">
+            <tr class="">
+                <td>Insured: {{ $bag->articles->where('is_insured', true)->count() }}</td>
+                <td colspan="3">Non Insured: {{ $bag->articles->where('is_insured', false)->count() }}</td>
+            </tr>
+            <tr class="">
                 <td></td>
                 <td colspan="3">Total: {{ count($bag->articles) }}</td>
             </tr>
-
         </table>
     </div>
 </body>
