@@ -32,7 +32,7 @@
         }
 
         .invoice-box table tr td:nth-child(2) {
-            text-align: right;
+            text-align: center;
         }
 
         .invoice-box table tr td:nth-child(3) {
@@ -40,7 +40,15 @@
         }
 
         .invoice-box table tr td:nth-child(4) {
+            text-align: center;
+        }
+
+        .invoice-box table tr td:nth-child(5) {
             text-align: right;
+        }
+
+        .invoice-box table tr td:nth-child(6) {
+            text-align: center;
         }
 
         .invoice-box table tr.top table td {
@@ -66,14 +74,6 @@
 
         .invoice-box table tr.details td {
             padding-bottom: 20px;
-        }
-
-        .invoice-box table tr.item td {
-            /* border-bottom: 1px solid rgb(0, 0, 0); */
-        }
-
-        .invoice-box table tr.item.last td {
-            border-bottom: none;
         }
 
         .invoice-box table tr.total td:nth-child(2) {
@@ -133,43 +133,57 @@
 
         <table cellpadding="0" cellspacing="0">
 
-            <tr><td></td></tr>
+            <tr>
+                <td></td>
+            </tr>
 
             <tr class="heading">
                 <td>Sl No.</td>
                 <td>Article No</td>
                 <td>Sl No.</td>
                 <td>Article No</td>
+                <td>Sl No.</td>
+                <td>Article No</td>
             </tr>
 
+            @php
+                $col_no = 0;
+            @endphp
             @foreach ($bag->articles as $index => $item)
-                @if ($index % 2 == 0)
+                @php
+                    $col_no == 3 ? ($col_no = 1) : $col_no++;
+                @endphp
+                @if ($col_no == 1)
                     <tr class="item">
                         <td>
-                            {{ $index + 1 }}
+                            {{ $index + 1 }}.
                         </td>
                         <td>
-                            <strong>{{ $item->article_no }}</strong>
+                            {{ $item->article_no }}
+                        </td>
+                    @elseif ($col_no == 2)
+                        <td>
+                            {{ $index + 1 }}.
+                        </td>
+                        <td>
+                            {{ $item->article_no }}
                         </td>
                     @else
                         <td>
-                            {{ $index + 1 }}
+                            {{ $index + 1 }}.
                         </td>
                         <td>
-                            <strong>{{ $item->article_no }}</strong>
+                            {{ $item->article_no }}
                         </td>
                     </tr>
                 @endif
             @endforeach
-
-
+            <tr><td></td></tr>
             <tr class="">
+                <td colspan="3"></td>
                 <td>Insured: {{ $bag->articles->where('is_insured', true)->count() }}</td>
-                <td colspan="3">Non Insured: {{ $bag->articles->where('is_insured', false)->count() }}</td>
-            </tr>
-            <tr class="">
-                <td></td>
-                <td colspan="3">Total: {{ count($bag->articles) }}</td>
+                <td>Non Insured: {{ $bag->articles->where('is_insured', false)->count() }}</td>
+                <td>Total: {{ count($bag->articles) }}</td>
             </tr>
         </table>
     </div>

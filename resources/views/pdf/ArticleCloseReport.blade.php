@@ -32,7 +32,7 @@
         }
 
         .invoice-box table tr td:nth-child(2) {
-            text-align: right;
+            text-align: center;
         }
 
         .invoice-box table tr td:nth-child(3) {
@@ -40,7 +40,15 @@
         }
 
         .invoice-box table tr td:nth-child(4) {
+            text-align: center;
+        }
+
+        .invoice-box table tr td:nth-child(5) {
             text-align: right;
+        }
+
+        .invoice-box table tr td:nth-child(6) {
+            text-align: center;
         }
 
         .invoice-box table tr.top table td {
@@ -66,14 +74,6 @@
 
         .invoice-box table tr.details td {
             padding-bottom: 20px;
-        }
-
-        .invoice-box table tr.item td {
-            /* border-bottom: 1px solid rgb(0, 0, 0); */
-        }
-
-        .invoice-box table tr.item.last td {
-            border-bottom: none;
         }
 
         .invoice-box table tr.total td:nth-child(2) {
@@ -125,7 +125,8 @@
                 <th style="text-align: right">
                     Printed by: {{ $user->name }} <br>
                     Printed at: {{ now()->toDayDateTimeString() }} <br>
-                    Set close: {{ $set->created_at != $set->updated_at ? $set->updated_at->toDayDateTimeString() : 'Not Closed' }}
+                    Set close:
+                    {{ $set->created_at != $set->updated_at ? $set->updated_at->toDayDateTimeString() : 'Not Closed' }}
                 </th>
             </tr>
         </table>
@@ -138,40 +139,46 @@
                 <td>Article No</td>
                 <td>Sl No.</td>
                 <td>Article No</td>
+                <td>Sl No.</td>
+                <td>Article No</td>
             </tr>
 
+            @php
+                $col_no = 0;
+            @endphp
+
             @foreach ($articles as $index => $item)
-                @if ($index % 2 == 0)
+                @php
+                    $col_no == 3 ? ($col_no = 1) : $col_no++;
+                @endphp
+                @if ($col_no == 1)
                     <tr class="item">
                         <td>
-                            {{ $index + 1 }}
+                            {{ $index + 1 }}.
                         </td>
                         <td>
-                            <strong>{{ $item->article_no }}</strong>
+                            {{ $item->article_no }}
+                        </td>
+                    @elseif ($col_no == 2)
+                        <td>
+                            {{ $index + 1 }}.
+                        </td>
+                        <td>
+                            {{ $item->article_no }}
                         </td>
                     @else
                         <td>
-                            {{ $index + 1 }}
+                            {{ $index + 1 }}.
                         </td>
                         <td>
-                            <strong>{{ $item->article_no }}</strong>
+                            {{ $item->article_no }}
                         </td>
                     </tr>
                 @endif
-                {{-- <tr class="item">
-                    <td>
-                        {{ $index + 1 }}
-                    </td>
-                    <td>
-                        <strong>{{ $item->article_no }}</strong>
-                    </td>
-                </tr> --}}
             @endforeach
-
-
             <tr class="total">
-                <td></td>
-                <td colspan="3">Total: {{ count($articles) }}</td>
+                <td colspan="5"></td>
+                <td>Total: {{ $articles->count() }}</td>
             </tr>
 
         </table>
