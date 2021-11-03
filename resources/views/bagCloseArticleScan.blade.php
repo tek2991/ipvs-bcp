@@ -98,7 +98,7 @@
                                         <button type="submit"
                                             class="inline-flex items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Submit</button>
                                     </div>
-                                    <div>Total Articles: {{ $articles->total() }} (Insured: {{ $articles->where('is_insured', true)->count() }})</div>
+                                    <div>Total Articles: {{ $articles->total() }}, (Insured: {{ $bag->articles->where('is_insured', true)->count() }})</div>
                                 </div>
                             </div>
                         </form>
