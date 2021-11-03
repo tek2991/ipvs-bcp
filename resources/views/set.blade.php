@@ -98,21 +98,21 @@
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="px-6 pt-6 font-bold text-lg">
+                <div class="px-6 py-6 font-bold text-lg">
                     <h3>Set Statistics</h3>
                 </div>
-
-                <div class="px-6 py-6 font-bold grid grid-cols-2 gap-16">
-                    <div>
-                        <h4>Bags received: {{ $status_arr['bags_received']->count() }}</h4>
-                        <h4>Bags closed: {{ $status_arr['bags_closed']->count() }}</h4>
+                @if (count($status_arr) > 0)
+                    <div class="px-6 pb-6 font-bold grid grid-cols-2 gap-16">
+                        <div>
+                            <h4>Bags received: {{ $status_arr['bags_received']->count() }}</h4>
+                            <h4>Bags closed: {{ $status_arr['bags_closed']->count() }}</h4>
+                        </div>
+                        <div>
+                            <h4>Articles opened: {{ $status_arr['articles_opened']->count() }}</h4>
+                            <h4>Articles closed: {{ $status_arr['articles_closed']->count() }}</h4>
+                        </div>
                     </div>
-                    <div>
-                        <h4>Articles opened: {{ $status_arr['articles_opened']->count() }}</h4>
-                        <h4>Articles closed: {{ $status_arr['articles_closed']->count() }}</h4>
-                    </div>
-                </div>
-
+                @endif
             </div>
         </div>
     </div>
