@@ -12,12 +12,12 @@
             max-width: 800px;
             margin: auto;
             padding: 30px;
-            /* border: 1px solid #eee; */
+            /* border: 1px solid #ffffff; */
             /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); */
             font-size: 16px;
             line-height: 24px;
-            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-            color: #555;
+            /* font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; */
+            color: rgb(0, 0, 0);
         }
 
         .invoice-box table {
@@ -50,7 +50,7 @@
         .invoice-box table tr.top table td.title {
             font-size: 45px;
             line-height: 45px;
-            color: #333;
+            color: rgb(0, 0, 0);
         }
 
         .invoice-box table tr.information table td {
@@ -58,8 +58,9 @@
         }
 
         .invoice-box table tr.heading td {
-            background: #eee;
-            border-bottom: 1px solid #ddd;
+            /* background: #ffffff; */
+            border-bottom: 2px solid rgb(0, 0, 0);
+            border-top: 2px solid rgb(0, 0, 0);
             font-weight: bold;
         }
 
@@ -68,7 +69,7 @@
         }
 
         .invoice-box table tr.item td {
-            border-bottom: 1px solid #eee;
+            /* border-bottom: 1px solid rgb(0, 0, 0); */
         }
 
         .invoice-box table tr.item.last td {
@@ -76,7 +77,7 @@
         }
 
         .invoice-box table tr.total td:nth-child(2) {
-            border-top: 2px solid #eee;
+            border-top: 2px solid #ffffff;
             font-weight: bold;
         }
 
@@ -107,7 +108,6 @@
         .invoice-box.rtl table tr td:nth-child(2) {
             text-align: left;
         }
-
     </style>
 </head>
 
