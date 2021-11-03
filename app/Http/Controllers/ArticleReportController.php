@@ -36,12 +36,16 @@ class ArticleReportController extends Controller
 
         if ($request->article_report_type == 'open') {
             $articles = $set->articles()->whereIn('article_transaction_type_id', $article_status_ids)->get();
-            $pdf = PDF::loadView('pdf.ArticleOpenReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
-            return $pdf->download('article_open_report_' . $set->id . '.pdf');
+            return view('pdf.ArticleOpenReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
+
+            // $pdf = PDF::loadView('pdf.ArticleOpenReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
+            // return $pdf->download('article_open_report_' . $set->id . '.pdf');
         } else {
             $articles = $set->articles()->whereIn('article_transaction_type_id', $article_status_ids)->get();
-            $pdf = PDF::loadView('pdf.ArticleCloseReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
-            return $pdf->download('article_close_report_' . $set->id . '.pdf');
+            return view('pdf.ArticleCloseReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
+
+            // $pdf = PDF::loadView('pdf.ArticleCloseReport', compact('articles', 'set', 'request', 'user', 'current_facility'));
+            // return $pdf->download('article_close_report_' . $set->id . '.pdf');
         }
     }
 }

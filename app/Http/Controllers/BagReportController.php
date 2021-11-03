@@ -35,8 +35,10 @@ class BagReportController extends Controller
         $set = Set::find($request->set_id);
         $bags = $set->bags()->whereIn('bag_transaction_type_id', $bag_status_ids)->get();
 
-        $pdf = PDF::loadView('pdf.bagReport', compact('bags', 'set', 'request', 'user', 'current_facility'));
-        return $pdf->download('bag' . $request->bag_report_type . '_report' . '.pdf');
+        return view('pdf.bagReport', compact('bags', 'set', 'request', 'user', 'current_facility'));
+
+        // $pdf = PDF::loadView('pdf.bagReport', compact('bags', 'set', 'request', 'user', 'current_facility'));
+        // return $pdf->download('bag' . $request->bag_report_type . '_report' . '.pdf');
 
         // return view('pdf.bagReport', compact('bags', 'set', 'request', 'user', 'current_facility'));
     }

@@ -170,9 +170,8 @@
 
             <tr class="total">
                 <td></td>
-                <td colspan="3">Total: {{ count($articles) }}</td>
+                <td colspan="3">Total: {{ $articles->count() }}</td>
             </tr>
-
         </table>
     </div>
 </body>

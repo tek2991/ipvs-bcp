@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 class pdfReportController extends Controller
 {
     public function manifest(Bag $bag){
-        $pdf = PDF::loadView('pdf.manifest', ['bag' => $bag,]);
-        return $pdf->download('manifest_' . $bag->bag_no . '.pdf');
+        return view('pdf.manifest', ['bag' => $bag,]);
+
+        // $pdf = PDF::loadView('pdf.manifest', ['bag' => $bag,]);
+        // return $pdf->download('manifest_' . $bag->bag_no . '.pdf');
     }
 }
