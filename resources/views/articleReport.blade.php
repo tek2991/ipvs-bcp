@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="flex gap-16 pt-8">
                                     <div>
-                                        <label for="article_report_type" class="pt-2 text-lg font-semibold">Bag Report Type: </label>
+                                        <label for="article_report_type" class="pt-2 text-lg font-semibold">Article Report Type: </label>
                                         <select name="article_report_type" id="article_report_type"
                                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
 
