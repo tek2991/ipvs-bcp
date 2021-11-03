@@ -59,8 +59,10 @@
                     Current date: {{ now()->toDayDateTimeString() }} <br>
 
                     Current business date:
-                    {{ count($currently_active) > 0 ? $currently_active->first()->created_at->toDayDateTimeString() : 'No active set' }} <br>
-                    Previous bussiness date: {{ count($previously_active) > 0 ? $previously_active->first()->created_at->toDayDateTimeString() . ' to ' . $previously_active->first()->updated_at->toDayDateTimeString() : 'N/A' }}
+                    {{ count($currently_active) > 0 ? $currently_active->first()->created_at->toDayDateTimeString() : 'No active set' }}
+                    <br>
+                    Previous bussiness date:
+                    {{ count($previously_active) > 0 ? $previously_active->first()->created_at->toDayDateTimeString() . ' to ' . $previously_active->first()->updated_at->toDayDateTimeString() : 'N/A' }}
                 </div>
             </div>
         </div>
@@ -97,20 +99,48 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="px-6 pt-6 font-bold text-lg">
+                    <h3>Set Statistics</h3>
+                </div>
+
+                <div class="px-6 py-6 font-bold grid grid-cols-2 gap-16">
+                    <div>
+                        <h4>Bags received: {{ $status_arr['bags_received']->count() }}</h4>
+                        <h4>Bags closed: {{ $status_arr['bags_closed']->count() }}</h4>
+                    </div>
+                    <div>
+                        <h4>Articles opened: {{ $status_arr['articles_opened']->count() }}</h4>
+                        <h4>Articles closed: {{ $status_arr['articles_closed']->count() }}</h4>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="py-4">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="px-6 pt-6 font-bold text-lg">
                     <h3>Set Close</h3>
                 </div>
                 @if (count($pending_arr) > 0)
-                <div class="px-6 pt-6 font-bold grid grid-cols-2 gap-16">
-                    <div>
-                        <h4>Bags receive but not processed: {{ $pending_arr['bags_in_receive_status']->count() }}</h4>
-                        <h4>Bags in dispatch scan: {{ $pending_arr['bags_in_dispatch_scan_status']->count() }}</h4>
+                    <div class="px-6 pt-6 font-bold grid grid-cols-2 gap-16">
+                        <div>
+                            <h4>Bags receive but not processed: {{ $pending_arr['bags_in_receive_status']->count() }}
+                            </h4>
+                            <h4>Bags in dispatch scan: {{ $pending_arr['bags_in_dispatch_scan_status']->count() }}
+                            </h4>
+                        </div>
+                        <div>
+                            <h4>Articles opened but not processed:
+                                {{ $pending_arr['articles_in_open_status']->count() }}</h4>
+                            <h4>Articles in opening scan: {{ $pending_arr['articles_in_open_scan_status']->count() }}
+                            </h4>
+                            <h4>Articles in closing scan:
+                                {{ $pending_arr['articles_in_close_scan_status']->count() }}</h4>
+                        </div>
                     </div>
-                    <div>
-                        <h4>Articles opened but not processed: {{ $pending_arr['articles_in_open_status']->count() }}</h4>
-                        <h4>Articles in opening scan: {{ $pending_arr['articles_in_open_scan_status']->count() }}</h4>
-                        <h4>Articles in closing scan: {{ $pending_arr['articles_in_close_scan_status']->count() }}</h4>
-                    </div>
-                </div>
                 @endif
                 <form action="{{ route('set.update') }}" method="post">
                     @csrf
