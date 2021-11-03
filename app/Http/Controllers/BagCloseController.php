@@ -117,7 +117,7 @@ class BagCloseController extends Controller
 
         return redirect()
             ->back()
-            ->withInput();
+            ->withInput()->with('scroll', true);
     }
 
     public function articleDeleteScan(Request $request)
