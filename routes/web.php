@@ -78,6 +78,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('export', [ExportController::class, 'export'])->name('export.export');
 
     Route::get('facility-mapping', [FacilityMappingController::class, 'index'])->name('facility-mapping.index');
+    Route::get('facility-mapping-show', [FacilityMappingController::class, 'list'])->name('facility-mapping.show');
 });
 
 

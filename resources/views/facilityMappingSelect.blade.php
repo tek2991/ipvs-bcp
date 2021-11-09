@@ -49,18 +49,17 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form action="{{ route('bag-receive.store') }}" method="post">
-                    @csrf
+                <form action="{{ route('facility-mapping.show') }}" method="get">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
                             <div class="grid grid-cols-2 gap-16">
                                 <div class="grid grid-cols-2 gap-2">
-                                    <label for="from_facility_id" class="pt-2 text-lg font-semibold">Select Facility </label>
-                                    <select name="from_facility_id" id="from_facility_id" autofocus
+                                    <label for="facility_id" class="pt-2 text-lg font-semibold">Select Facility </label>
+                                    <select name="facility_id" id="facility_id" autofocus
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                         @foreach ($facilities as $facility)
                                             <option value="{{ $facility->id }}"
-                                                {{ $facility->id == old('from_facility_id') ? 'selected' : '' }}>
+                                                {{ $facility->id == old('facility_id') ? 'selected' : '' }}>
                                                 {{ $facility->name }} {{ $facility->pincode }}
                                             </option>
                                         @endforeach
