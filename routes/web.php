@@ -13,6 +13,7 @@ use App\Http\Controllers\BagReceiveController;
 use App\Http\Controllers\PendingBagController;
 use App\Http\Controllers\ArticleDetailController;
 use App\Http\Controllers\ArticleReportController;
+use App\Http\Controllers\FacilityMappingController;
 use App\Http\Controllers\InsuredReportController;
 use App\Http\Controllers\PendingArticleController;
 
@@ -75,6 +76,8 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('export', [ExportController::class, 'index'])->name('export.index');
     Route::post('export', [ExportController::class, 'export'])->name('export.export');
+
+    Route::get('facility-mapping', [FacilityMappingController::class, 'index'])->name('facility-mapping.index');
 });
 
 
