@@ -10,19 +10,6 @@
         </h2>
     </x-slot>
 
-    @if (session('scroll') || session('success') || session('error') || $errors->any())
-        <script>
-            // This prevents the page from scrolling down to where it was previously.
-            if ('scrollRestoration' in history) {
-                history.scrollRestoration = 'manual';
-            }
-            // This is needed if the user scrolls down during page load and you want to make sure the page is scrolled to the top once it's fully loaded. This has Cross-browser support.
-            setTimeout(function() {
-                window.scrollTo(0, 0);
-            }, 50);
-        </script>
-    @endif
-
     @if (session('success'))
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -60,21 +47,65 @@
     @endif
 
 
-    @if ($errors->any())
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+    <div class="pt-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-gray-400 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="grid grid-cols-2">
+                    <div class="p-6 font-semibold">
+                        <div class="text-xl mb-6 font-semibold">Add facility:</div>
+                        <form action="{{ route('facility-mapping.create') }}" method="post">
+                            @csrf
+
+                            <input type="hidden" name="base_facility_id" value="{{ $request->facility_id }}">
+
+                            <div class="flex gap-4">
+                                <div class="flex gap-4">
+                                    <label for="facility_code_for_mapping" class="pt-2 text-lg font-semibold">Facility
+                                        ID:</label>
+                                    <input name="facility_code_for_mapping" id="facility_code_for_mapping" type="text"
+                                        {{-- value="{{ $errors->any() ? old('facility_code_for_mapping') : '' }}" --}}
+                                        class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </input>
+                                </div>
+
+                                <div>
+                                    <button type="submit"
+                                        class="inline-flex items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Add</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="p-6 font-semibold">
+                        <div class="text-xl mb-6 font-semibold">Remove Facility:</div>
+                        <form action="{{ route('facility-mapping.destroy') }}" method="post">
+                            @csrf
+                            @method('delete')
+
+                            <input type="hidden" name="base_facility_id" value="{{ $request->facility_id }}">
+
+                            <div class="flex gap-4">
+                                <div class="flex gap-4">
+                                    <label for="facility_code_for_delete" class="pt-2 text-lg font-semibold">Facility
+                                        ID:</label>
+                                    <input name="facility_code_for_delete" id="facility_code_for_delete" type="text"
+                                        {{-- value="{{ $errors->any() ? old('facility_code_for_delete') : '' }}" --}}
+                                        class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </input>
+                                </div>
+
+                                <div>
+                                    <button type="submit"
+                                        class="inline-flex items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Remove</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    @endif
+    </div>
 
-    
-
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <form action="{{ route('facility-mapping.show') }}" method="get">
@@ -85,34 +116,36 @@
                                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 @foreach ($active_facilities as $facility)
                                     <option value="{{ $facility->id }}"
-                                        {{ $request->facility_id == $facility->id ? 'selected' : '' }}
-                                        >
+                                        {{ $request->facility_id == $facility->id ? 'selected' : '' }}>
                                         {{ $facility->name }}
                                     </option>
                                 @endforeach
+
                             </select>
                         </div>
                         <div>
                             <label for="facility_type_id" class="pt-2 text-lg font-semibold">Facility Type: </label>
                             <select name="facility_type_id" id="facility_type_id"
                                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                <option value="">All</option>
                                 @foreach ($facility_types as $facility_type)
                                     <option value="{{ $facility_type->id }}"
-                                        {{ $request->facility_type_id == $facility_type->id ? 'selected' : '' }}
-                                        >
+                                        {{ $request->facility_type_id == $facility_type->id ? 'selected' : '' }}>
                                         {{ $facility_type->name }}
                                     </option>
                                 @endforeach
+
                             </select>
                         </div>
                         <div>
-                            <label for="reporting_circle_id" class="pt-2 text-lg font-semibold">Reporting Circle: </label>
+                            <label for="reporting_circle_id" class="pt-2 text-lg font-semibold">Reporting Circle:
+                            </label>
                             <select name="reporting_circle_id" id="reporting_circle_id"
                                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                <option value="">All</option>
                                 @foreach ($reporting_circles as $reporting_circle)
                                     <option value="{{ $reporting_circle->id }}"
-                                        {{ $request->reporting_circle_id == $reporting_circle->id ? 'selected' : '' }}
-                                        >
+                                        {{ $request->reporting_circle_id == $reporting_circle->id ? 'selected' : '' }}>
                                         {{ $reporting_circle->name }}
                                     </option>
                                 @endforeach
@@ -120,7 +153,7 @@
                         </div>
 
                         <button type="submit"
-                            class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Submit</button>
+                            class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Filter</button>
                     </div>
                 </form>
             </div>
@@ -139,7 +172,7 @@
         <div class="py-2">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="text-lg font-semibold p-4">
-                    Mapped Facilities
+                    Currently Mapped Facilities
                 </div>
             </div>
             @foreach ($facilities as $facility)
