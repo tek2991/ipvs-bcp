@@ -82,11 +82,6 @@
                                     </select>
                                 </div>
                                 <div class="flex justify-between gap-6">
-                                    <div class="py-2 font-bold">
-                                        <label for="update_destination" class="pt-2">Change destination</label>
-                                        <input type="checkbox" name="update_destination" id="update_destination" value="1"
-                                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                    </div>
                                     <label for="bag_type_id" class="pt-2 text-lg font-semibold">Bag Type: </label>
                                     <select name="bag_type_id" id="bag_type_id"
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -97,6 +92,12 @@
                                             </option>
                                         @endforeach
                                     </select>
+
+                                    <div class="py-2 font-bold">
+                                        <label for="update_destination" class="pt-2">Update details</label>
+                                        <input type="checkbox" name="update_destination" id="update_destination" value="1"
+                                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
                                 </div>
                                 <div class="flex justify-between gap-6">
                                     <label for="bag_no" class="pt-2 text-lg font-semibold">Bag No: </label>

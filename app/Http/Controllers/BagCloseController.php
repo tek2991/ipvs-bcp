@@ -71,6 +71,7 @@ class BagCloseController extends Controller
 
             $bag_to_update->update([
                 'to_facility_id' => $request->to_facility_id,
+                'bag_type_id' => $request->bag_type_id,
                 'updated_by' => $user->id,
             ]);
         }
