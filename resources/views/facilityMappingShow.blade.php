@@ -109,10 +109,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <form action="{{ route('facility-mapping.show') }}" method="get">
+                    <input type="hidden" name="facility_id" value="{{ $request->facility_id }}">
                     <div class="p-6 flex items-center justify-between">
                         <div>
                             <label for="facility_id" class="pt-2 text-lg font-semibold">Map for Facility: </label>
-                            <select name="facility_id" id="facility_id" disabled
+                            <select id="facility_id" disabled
                                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 @foreach ($active_facilities as $facility)
                                     <option value="{{ $facility->id }}"
