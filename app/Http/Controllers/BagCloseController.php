@@ -65,6 +65,13 @@ class BagCloseController extends Controller
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
             ]);
+        }else{
+            $bag_to_update = Bag::where('bag_no', $request->bag_no)->where('set_id', $active_set->id)->where('bag_transaction_type_id', $bag_transaction_type_id)->firstOrFail();
+
+            $bag_to_update->update([
+                'to_facility_id' => $request->to_facility_id,
+                'updated_by' => $user->id,
+            ]);
         }
         
         $bag = Bag::where('bag_no', $request->bag_no)->where('set_id', $active_set->id)->where('bag_transaction_type_id', $bag_transaction_type_id)->firstOrFail();
