@@ -112,7 +112,7 @@
                     <div class="p-6 flex items-center justify-between">
                         <div>
                             <label for="facility_id" class="pt-2 text-lg font-semibold">Map for Facility: </label>
-                            <select name="facility_id" id="facility_id"
+                            <select name="facility_id" id="facility_id" disabled
                                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 @foreach ($active_facilities as $facility)
                                     <option value="{{ $facility->id }}"
