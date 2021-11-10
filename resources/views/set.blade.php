@@ -78,7 +78,7 @@
                     @csrf
                     <div class="px-7 py-2 font-bold">
                         <label for="confirm" class="pt-2">Confirm</label>
-                        <input type="checkbox" name="confirm" id="confirm"
+                        <input type="checkbox" name="confirm" id="confirm" value="1"
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     </div>
                     @if (count($currently_active) > 0)
@@ -147,7 +147,7 @@
                     @method('PUT')
                     <div class="px-7 py-2 font-bold">
                         <label for="confirm" class="pt-2">Confirm</label>
-                        <input type="checkbox" name="confirm" id="confirm"
+                        <input type="checkbox" name="confirm" id="confirm" value="1"
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     </div>
                     @if (count($currently_active) == 0)

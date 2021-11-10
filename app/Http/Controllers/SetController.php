@@ -48,11 +48,15 @@ class SetController extends Controller
         return view('set', compact('currently_active', 'previously_active', 'pending_arr', 'status_arr'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
         $user = Auth::user();
         $current_facility = $user->facility;
         $active_set = Set::where('facility_id', $current_facility->id)->where('is_active', true)->get();
+        
+        $this->validate($request, [
+            'confirm' => 'required|boolean'
+        ]);
 
         if (count($active_set) > 0) {
             return redirect()
@@ -72,12 +76,16 @@ class SetController extends Controller
             ->with('success', 'Set started');
     }
 
-    public function update()
+    public function update(Request $request)
     {
         $user = Auth::user();
         $current_facility = $user->facility;
         $active_set = $current_facility->sets()->where('is_active', true)->get();
 
+        $this->validate($request, [
+            'confirm' => 'required|boolean'
+        ]);
+        
         if (count($active_set) == 0) {
             return redirect()
                 ->back()

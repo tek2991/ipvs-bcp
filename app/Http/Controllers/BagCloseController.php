@@ -44,6 +44,7 @@ class BagCloseController extends Controller
 
         $this->validate($request, [
             'to_facility_id' => 'bail|required|exists:facilities,id',
+            'update_destination' => 'bail|boolean',
             'bag_type_id' => 'bail|required|exists:bag_types,id',
             'bag_no' => [
                 'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{2}[sS]{1}[0-9]{10}$^',
@@ -65,7 +66,7 @@ class BagCloseController extends Controller
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
             ]);
-        }else{
+        }else if($request->update_destination){
             $bag_to_update = Bag::where('bag_no', $request->bag_no)->where('set_id', $active_set->id)->where('bag_transaction_type_id', $bag_transaction_type_id)->firstOrFail();
 
             $bag_to_update->update([
