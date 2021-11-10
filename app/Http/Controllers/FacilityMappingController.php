@@ -44,10 +44,7 @@ class FacilityMappingController extends Controller
 
         
         $facility_ids = $selected_facility->mappedFacilities()->get('mapped_facility_id')->pluck('mapped_facility_id')->toArray();
-        // dd($selected_facility, $facility_ids);
-        $facilities = Facility::whereIn('id', $facility_ids)->where('reporting_circle_id', 'like', $reporting_circle_id)->where('facility_type_id', 'like', $facility_type_id)->orderBy('pincode')->with('district', 'reportingCircle')->paginate();
-
-        // dd($facilities);
+        $facilities = Facility::whereIn('id', $facility_ids)->where('reporting_circle_id', 'like', $reporting_circle_id)->where('facility_type_id', 'like', $facility_type_id)->orderBy('name')->with('district', 'reportingCircle')->paginate();
 
         return view('facilityMappingShow', compact('facilities', 'reporting_circles', 'facility_types', 'active_facilities', 'request'));
     }
