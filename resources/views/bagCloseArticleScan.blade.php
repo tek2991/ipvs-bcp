@@ -70,36 +70,47 @@
                             <input type="hidden" name="bag_id" value="{{ $bag->id }}">
                             <input type="hidden" name="to_facility_id" value="{{ $bag->toFacility->id }}">
 
-                            <div class="grid grid-cols-2 gap-12">
-                                <div class="grid grid-cols-2 gap-16 mt-6">
+                            <div class="flex gap-4 justify-between">
+                                <div class="flex gap-10">
                                     <label for="bag_no" class="pt-2 text-lg font-semibold">Bag No:</label>
                                     <input id="bag_no" type="text" disabled value="{{ $request->bag_no }}"
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </input>
                                 </div>
-                                <div class="grid grid-cols-2 gap-16 mt-6">
+                                <div class="flex gap-4">
                                     <label for="to" class="pt-2 text-lg font-semibold">To:</label>
                                     <input id="to" type="text" disabled value="{{ $bag->toFacility->name }}"
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </input>
                                 </div>
+                                <div class="flex gap-4">
+                                    <div class="pt-2">Total Articles: {{ $articles->total() }}, (Insured:
+                                        {{ $bag->articles->where('is_insured', true)->count() }})</div>
+                                </div>
                             </div>
-                            <div class="grid grid-cols-2 gap-12 mt-6">
-                                <div class="grid grid-cols-2 gap-16 mt-6">
+                            <div class="flex gap-4 mt-6 justify-between">
+                                <div class="flex gap-4">
                                     <label for="article_no" class="pt-2 text-lg font-semibold">Article No:</label>
                                     <input name="article_no" id="article_no" type="text" autofocus
                                         value="{{ $errors->any() ? old('article_no') : '' }}"
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </input>
-                                </div>
-
-                                <div class="mt-6 grid grid-cols-2">
-                                    <div>
+                                    <div class="">
                                         <button type="submit"
                                             class="inline-flex items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Submit</button>
                                     </div>
-                                    <div>Total Articles: {{ $articles->total() }}, (Insured: {{ $bag->articles->where('is_insured', true)->count() }})</div>
                                 </div>
+                                <form action="{{ route('bag-close.save', ['bag' => $bag->id]) }}" method="post"
+                                    class="flex gap-4">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="bag_id" value="{{ $bag->id }}">
+                                    <input type="hidden" name="bag_no" value="{{ $request->bag_no }}">
+                                    <button type="submit"
+                                        class="inline-flex items-center px-4 py-3 bg-green-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 active:bg-gray-900 focus:outline-none focus:border-green-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Save
+                                        Bag</button>
+
+                                </form>
                             </div>
                         </form>
                     </div>
@@ -157,26 +168,6 @@
             </div>
         </div>
     @endif
-
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 font-semibold">
-                    <form action="{{ route('bag-close.save', ['bag' => $bag->id]) }}" method="post">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" name="bag_id" value="{{ $bag->id }}">
-                        <input type="hidden" name="bag_no" value="{{ $request->bag_no }}">
-                        <div class="flex gap-12">
-                            <div class="text-xl font-semibold pt-1">Save bag:</div>
-                            <button type="submit"
-                                class="inline-flex items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
