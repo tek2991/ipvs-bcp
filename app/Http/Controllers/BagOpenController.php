@@ -50,7 +50,7 @@ class BagOpenController extends Controller
 
         $bag = Bag::where('bag_no', $request->bag_no)->where('set_id', $active_set->id)->whereIn('bag_transaction_type_id', $bag_statuses)->firstOrFail();
 
-        if ($bag->bag_transaction_type_id = $bag_transaction_type_id && $bag->updated_by != $user->id) {
+        if ($bag->bag_transaction_type_id = $bag_transaction_type_id && $bag->set_id != $active_set) {
             return redirect()
                 ->back()
                 ->with('error', 'Bag is scaned by another user: ' . $bag->updator->name);
