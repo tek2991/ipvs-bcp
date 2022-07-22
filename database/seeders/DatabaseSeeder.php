@@ -19,12 +19,10 @@ class DatabaseSeeder extends Seeder
             BagTransactionTypeSeeder::class,
             BagTypeSeeder::class,
             FacilityTypeSeeder::class,
-            DistrictSeeder::class,
-            ReportingCircleSeeder::class,
             FacilitySeeder::class,
             CadreSeeder::class,
             UserSeeder::class,
-            MapAllFacilitiesSeeder::class,
+            // MapAllFacilitiesSeeder::class,
         ]);
     }
 }

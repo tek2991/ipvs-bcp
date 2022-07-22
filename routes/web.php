@@ -16,6 +16,7 @@ use App\Http\Controllers\ArticleReportController;
 use App\Http\Controllers\FacilityMappingController;
 use App\Http\Controllers\InsuredReportController;
 use App\Http\Controllers\PendingArticleController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +34,13 @@ Route::get('/', function () {
 });
 
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    
+
+    Route::get('/user', [UserController::class, 'index'])->name('users.index');
+
     Route::resource('set', SetController::class)->only('index', 'store');
     Route::put('set', [SetController::class, 'update'])->name('set.update');
 
@@ -84,4 +87,4 @@ Route::middleware(['auth'])->group(function(){
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
