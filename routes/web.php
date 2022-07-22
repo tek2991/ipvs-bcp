@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/user', [UserController::class, 'index'])->name('users.index');
+    Route::resource('user', UserController::class)->only(['index', 'create', 'store', 'update']);
 
     Route::resource('set', SetController::class)->only('index', 'store');
     Route::put('set', [SetController::class, 'update'])->name('set.update');

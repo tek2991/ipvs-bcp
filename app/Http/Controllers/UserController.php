@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cadre;
+use App\Models\Facility;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,8 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('userIndex', compact('users'));
+        return view('userIndex');
     }
 
     /**
@@ -25,7 +26,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $active_facilities = Facility::where('is_active', true)->get();
+        $cadres = Cadre::all();
+        return view('userCreate', compact('active_facilities', 'cadres'));
     }
 
     /**
@@ -36,7 +39,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'username' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'cadre_id' => 'required|exists:cadres,id',
+            'facility_id' => 'required|exists:facilities,id',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'cadre_id' => $request->cadre_id,
+            'facility_id' => $request->facility_id,
+        ]);
+
+        return redirect()->route('user.index')->with('success', 'User created successfully');
     }
 
     /**
