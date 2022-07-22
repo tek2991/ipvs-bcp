@@ -85,4 +85,8 @@ class User extends Authenticatable
     public function cadre(){
         return $this->belongsTo(Cadre::class);
     }
+
+    public function is_admin(){
+        return $this->username == 'administrator';
+    }
 }

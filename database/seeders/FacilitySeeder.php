@@ -735,6 +735,10 @@ class FacilitySeeder extends Seeder
             ['id' => 'PO12204352000', 'name' => 'Vivekananda Road S.O', 'district' => 'CACHAR', 'pincode' => '788007', 'circle' => 'Assam', 'type' => 'PO'],
         ];
 
+        $active_facility_ids = [
+            'PH12250000761'
+        ];
+
         foreach ($facilities as $facility) {
             $facility_type = FacilityType::where('name', $facility['type'])->first();
             $district = District::where('name', 'ilike', $facility['district'])->first();
@@ -747,6 +751,7 @@ class FacilitySeeder extends Seeder
                 'facility_type_id' => $facility_type->id,
                 'district_id' => $district->id,
                 'reporting_circle_id' => $circle->id,
+                'is_active' => in_array($facility['id'], $active_facility_ids) ? true : false,
             ]);
         }
     }

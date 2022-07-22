@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             FacilitySeeder::class,
             CadreSeeder::class,
             UserSeeder::class,
+            MapAllFacilitiesSeeder::class,
         ]);
     }
 }
