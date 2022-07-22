@@ -130,7 +130,7 @@ final class UserTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    /*
+    
     public function actions(): array
     {
        return [
@@ -144,7 +144,7 @@ final class UserTable extends PowerGridComponent
                ->method('delete')
         ];
     }
-    */
+    
 
     /*
     |--------------------------------------------------------------------------

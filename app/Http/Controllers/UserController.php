@@ -79,7 +79,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $active_facilities = Facility::where('is_active', true)->get();
+        $cadres = Cadre::all();
+        return view('userEdit', compact('user', 'active_facilities', 'cadres'));
     }
 
     /**
@@ -91,7 +93,25 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'username' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:6|confirmed',
+            'cadre_id' => 'required|exists:cadres,id',
+            'facility_id' => 'required|exists:facilities,id',
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => $request->password ? bcrypt($request->password) : $user->password,
+            'cadre_id' => $request->cadre_id,
+            'facility_id' => $request->facility_id,
+        ]);
+
+        return redirect()->route('user.index')->with('success', 'User updated successfully');
     }
 
     /**
