@@ -15,7 +15,8 @@
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
         "power-components/livewire-powergrid": "^3.2",
-        "psr/log": "^1.0"
+        "psr/log": "^1.0",
+        "wire-elements/modal": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",
