@@ -130,21 +130,23 @@ final class UserTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    
+
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('user.edit', ['user' => 'id']),
+        return [
+            Button::make('edit', 'Edit')
+                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('user.edit', ['user' => 'id'])
+                ->target('_self'),
 
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('user.destroy', ['user' => 'id'])
-               ->method('delete')
+            // Button::add('destroy')
+            //     ->caption('Delete')
+            //     ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+            //     ->openModal('confirm-modal', ['route' => 'user.destroy', 'model_id' => 'id', 'model_name' => 'User', 'model_action' => 'destroy'])
+            //     ->method('delete')
         ];
     }
-    
+
 
     /*
     |--------------------------------------------------------------------------
