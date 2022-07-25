@@ -36,6 +36,7 @@ class Facility extends Model
         'district_id',
         'reporting_circle_id',
         'facility_type_id',
+        'is_active',
     ];
 
     public function facilityType(){

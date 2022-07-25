@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SetController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\BagOpenController;
 use App\Http\Controllers\BagCloseController;
+use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\ManifestController;
 use App\Http\Controllers\BagReportController;
 use App\Http\Controllers\pdfReportController;
@@ -13,10 +15,9 @@ use App\Http\Controllers\BagReceiveController;
 use App\Http\Controllers\PendingBagController;
 use App\Http\Controllers\ArticleDetailController;
 use App\Http\Controllers\ArticleReportController;
-use App\Http\Controllers\FacilityMappingController;
 use App\Http\Controllers\InsuredReportController;
 use App\Http\Controllers\PendingArticleController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\FacilityMappingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('export', [ExportController::class, 'index'])->name('export.index');
     Route::post('export', [ExportController::class, 'export'])->name('export.export');
+
+    Route::resource('facility', FacilityController::class)->only(['index', 'create', 'store', 'edit', 'update']);
 
     Route::get('facility-mapping', [FacilityMappingController::class, 'index'])->name('facility-mapping.index');
     Route::get('facility-mapping-show', [FacilityMappingController::class, 'list'])->name('facility-mapping.show');
