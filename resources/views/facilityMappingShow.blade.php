@@ -111,7 +111,7 @@
 
                 <div class="p-6 font-semibold">
                     <div class="text-xl mb-6 font-semibold">Upload Excel file:</div>
-                    <form action="{{ route('facility-mapping.upload') }}" method="post">
+                    <form action="{{ route('facility-mapping.upload') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="base_facility_id" value="{{ $request->facility_id }}">
 
