@@ -6,11 +6,13 @@ namespace App\Imports;
 use App\Models\District;
 
 use App\Models\Facility;
+use App\Models\FacilityMapping;
 use App\Models\FacilityType;
 use Illuminate\Support\Carbon;
 use App\Models\ReportingCircle;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -48,40 +50,40 @@ class FacilitysImport implements ToCollection, WithHeadingRow, WithValidation
         foreach ($collection as $row) {
             // Check if facility_type exists
             $facility_type = $row['facility_type'];
-            $facility_type = FacilityType::where('name', $facility_type)->first();
-            if(!$facility_type){
+            $facility_type = FacilityType::where('name', 'ilike', $facility_type)->first();
+            if (!$facility_type) {
                 $facility_type = FacilityType::create([
-                    'name' => $row['facility_type'],
-                    'description' => $row['facility_type'],
+                    'name' => Str::upper($row['facility_type']),
+                    'description' => Str::upper($row['facility_type']),
                 ]);
             }
 
             // Check if reporting_circle exists
             $reporting_circle = $row['reporting_circle'];
-            $reporting_circle = ReportingCircle::where('name', $reporting_circle)->first();
-            if(!$reporting_circle){
+            $reporting_circle = ReportingCircle::where('name', 'ilike', $reporting_circle)->first();
+            if (!$reporting_circle) {
                 $reporting_circle = ReportingCircle::create([
-                    'name' => $row['reporting_circle'],
+                    'name' => Str::upper($row['reporting_circle']),
                 ]);
             }
 
             // Check if district exists
             $district = $row['district'];
-            $district = District::where('name', $district)->first();
-            if(!$district){
+            $district = District::where('name', 'ilike', $district)->first();
+            if (!$district) {
                 $district = District::create([
-                    'name' => $row['district'],
+                    'name' => Str::upper($row['district']),
                 ]);
             }
 
             // Check if facility code already exists
             $facility_code = $row['facility_code'];
-            $facility = Facility::where('facility_code', $facility_code)->first();
+            $facility = Facility::where('facility_code', 'ilike', $facility_code)->first();
 
             // If facility does not exist, create it
-            if(!$facility){
+            if (!$facility) {
                 $facility = Facility::create([
-                    'facility_code' => $row['facility_code'],
+                    'facility_code' => Str::upper($facility_code),
                     'name' => $row['name'],
                     'pincode' => $row['pincode'],
                     'facility_type_id' => $facility_type->id,
@@ -89,7 +91,7 @@ class FacilitysImport implements ToCollection, WithHeadingRow, WithValidation
                     'district_id' => $district->id,
                     'is_active' => False,
                 ]);
-            }else{
+            } else {
                 // If facility exists, update it
                 $facility->update([
                     'name' => $row['name'],
@@ -98,6 +100,15 @@ class FacilitysImport implements ToCollection, WithHeadingRow, WithValidation
                     'reporting_circle_id' => $reporting_circle->id,
                     'district_id' => $district->id,
                     'is_active' => False,
+                ]);
+            }
+
+            // Create facility mapping if it does not exist
+            $facility_mapping = FacilityMapping::where('mapped_facility_id', $facility->id)->where('base_facility_id', self::$base_facility_id)->first();
+            if (!$facility_mapping) {
+                $facility_mapping = FacilityMapping::create([
+                    'mapped_facility_id' => $facility->id,
+                    'base_facility_id' => self::$base_facility_id,
                 ]);
             }
         }

@@ -110,7 +110,7 @@
             <div class="bg-gray-400 overflow-hidden shadow-sm sm:rounded-lg">
 
                 <div class="p-6 font-semibold">
-                    <div class="text-xl mb-6 font-semibold">Upload Excel file:</div>
+                    <div class="text-xl mb-6 font-semibold">Upload Excel file <a class="font-regular text-blue-800 text-sm" href="{{ asset('res/bcp_facility_mapping_template.xlsx') }}" target="_blank">Download Template</a></div>
                     <form action="{{ route('facility-mapping.upload') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="base_facility_id" value="{{ $request->facility_id }}">
