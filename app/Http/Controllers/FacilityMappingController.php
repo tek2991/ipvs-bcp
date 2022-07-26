@@ -72,6 +72,10 @@ class FacilityMappingController extends Controller
         ->withInput();
     }
 
+    public function upload(Request $request){
+        
+    }
+
     public function destroy(Request $request){
         $user = Auth::user();
         if($user->username != 'administrator'){

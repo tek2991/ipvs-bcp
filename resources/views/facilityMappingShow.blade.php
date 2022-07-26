@@ -62,8 +62,8 @@
                                 <div class="flex gap-4">
                                     <label for="facility_code_for_mapping" class="pt-2 text-lg font-semibold">Facility
                                         ID:</label>
-                                    <input name="facility_code_for_mapping" id="facility_code_for_mapping" type="text"
-                                        {{-- value="{{ $errors->any() ? old('facility_code_for_mapping') : '' }}" --}}
+                                    <input name="facility_code_for_mapping" id="facility_code_for_mapping"
+                                        type="text" {{-- value="{{ $errors->any() ? old('facility_code_for_mapping') : '' }}" --}}
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </input>
                                 </div>
@@ -101,6 +101,34 @@
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pt-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-gray-400 overflow-hidden shadow-sm sm:rounded-lg">
+
+                <div class="p-6 font-semibold">
+                    <div class="text-xl mb-6 font-semibold">Upload Excel file:</div>
+                    <form action="{{ route('facility-mapping.upload') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="base_facility_id" value="{{ $request->facility_id }}">
+
+                        <div class="flex gap-4 justify-between">
+
+                            <input name="file" id="file" type="file"
+                                class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+
+
+                            <div>
+                                <button type="submit"
+                                    class="inline-flex items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Upload</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>

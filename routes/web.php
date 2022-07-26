@@ -86,6 +86,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('facility-mapping', [FacilityMappingController::class, 'index'])->name('facility-mapping.index');
     Route::get('facility-mapping-show', [FacilityMappingController::class, 'list'])->name('facility-mapping.show');
     Route::post('facility-mapping-create', [FacilityMappingController::class, 'create'])->name('facility-mapping.create');
+    Route::post('facility-mapping-upload', [FacilityMappingController::class, 'upload'])->name('facility-mapping.upload');
     Route::delete('facility-mapping-destroy', [FacilityMappingController::class, 'destroy'])->name('facility-mapping.destroy');
 });
 
