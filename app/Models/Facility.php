@@ -58,4 +58,8 @@ class Facility extends Model
     public function mappedFacilities(){
         return $this->hasMany(FacilityMapping::class, 'base_facility_id');
     }
+
+    public function users(){
+        return $this->hasMany(User::class);
+    }
 }

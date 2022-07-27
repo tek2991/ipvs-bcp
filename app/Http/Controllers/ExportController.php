@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use ZipArchive;
 use App\Models\Set;
+use App\Models\Export;
 use App\Exports\BagExport;
 use Illuminate\Http\Request;
 use App\Models\BagTransactionType;
@@ -18,9 +20,11 @@ class ExportController extends Controller
         $user = Auth::user();
         $current_facility = $user->facility;
 
+        $users = $current_facility->users()->get();
+
         $sets = $user->username != 'administrator' ? $current_facility->sets()->orderBy('created_at', 'desc')->get() : Set::orderBy('created_at', 'desc')->get();
 
-        return view('export', compact('sets'));
+        return view('export', compact('sets', 'users'));
     }
 
     public function export(Request $request){
@@ -55,6 +59,44 @@ class ExportController extends Controller
                 $articles = $set->articles()->whereIn('article_transaction_type_id', $article_status_ids)->with('closingBag.toFacility', 'articleType', 'articleTransactionType')->get();
                 return Excel::download(new ArticleCloseExport($articles, $status), $name);
             }
+        }
+    }
+
+    public function exportUser(Request $request){
+        $this->validate($request, [
+            'user_id' => 'integer|exists:users,id',
+            'set_id' => 'integer|exists:sets,id',
+            'report_type' => 'string|in:bag_receive,bag_dispatch,article_open,article_close'
+        ]);
+
+        $set = Set::find($request->set_id);
+        $user = Auth::user();
+
+
+        if(in_array($request->report_type, ['bag_receive','bag_dispatch'])){
+            $bag_status_names = $request->report_type == 'bag_receive' ? ['RD', 'OP'] : ['CL', 'DI'];
+            $bag_status_ids = BagTransactionType::whereIn('name', $bag_status_names)->get()->modelKeys();
+            $bags = $set->bags()->whereIn('bag_transaction_type_id', $bag_status_ids)->where('updated_by', $user->id)->with('bagType', 'bagTransactionType')->get();
+
+            $date_time = $request->report_type == 'bag_dispatch' ? $set->updated_at->addMinute() : $set->updated_at;
+            $name = $set->facility->facility_code.'_'. $set->setType->name .'_'.date_format($date_time, "YmdHis").'.xlsx';
+            $status = $request->report_type == 'bag_receive' ? 'RD' : 'DI';
+            return Excel::download(new BagExport($bags, $status), $name);
+        }else{
+            $type = $request->report_type == 'article_open' ? 'OP' : 'CL';
+            $export_file_paths = Export::where('user_id', $user->id)->where('set_id', $set->id)->where('type', $type)->get()->pluck('file_path')->toArray();
+            // Add all the file paths to a zip file.
+            $zip = new ZipArchive();
+            $zip_file_path = $set->facility->facility_code.'_'. $set->setType->name .'_'.date_format($set->updated_at, "YmdHis"). '_' . $user->name . '.zip';
+            $zip_file_path = storage_path('app/public/'.$zip_file_path);
+            if ($zip->open($zip_file_path, \ZipArchive::CREATE) === TRUE) {
+                foreach ($export_file_paths as $file_path) {
+                    $zip->addFile(storage_path('app/'.$file_path), basename($file_path));
+                }
+                $zip->close();
+            }
+            // Return the zip file.
+            return response()->download($zip_file_path);
         }
     }
 }
