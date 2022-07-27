@@ -89,4 +89,8 @@ class User extends Authenticatable
     public function is_admin(){
         return $this->username == 'administrator';
     }
+
+    public function exports(){
+        return $this->hasMany(Export::class);
+    }
 }

@@ -3,17 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bag;
+use App\Models\Export;
 use App\Models\Article;
 use App\Models\BagType;
 use App\Models\Facility;
 use App\Models\ArticleType;
 use Illuminate\Http\Request;
 use App\Rules\BagClosingRule;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use App\Rules\ArticleNumberRule;
 use App\Rules\ArticleClosingRule;
 use App\Models\BagTransactionType;
+use App\Exports\ArticleCloseExport;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\ArticleTransactionType;
 
 class BagCloseController extends Controller
@@ -66,7 +70,7 @@ class BagCloseController extends Controller
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
             ]);
-        }else if($request->update_destination){
+        } else if ($request->update_destination) {
             $bag_to_update = Bag::where('bag_no', $request->bag_no)->where('set_id', $active_set->id)->where('bag_transaction_type_id', $bag_transaction_type_id)->firstOrFail();
 
             $bag_to_update->update([
@@ -75,7 +79,7 @@ class BagCloseController extends Controller
                 'updated_by' => $user->id,
             ]);
         }
-        
+
         $bag = Bag::where('bag_no', $request->bag_no)->where('set_id', $active_set->id)->where('bag_transaction_type_id', $bag_transaction_type_id)->firstOrFail();
         $articles = $bag->articles()->with('articleType')->orderBy('created_at', 'desc')->paginate();
 
@@ -179,7 +183,8 @@ class BagCloseController extends Controller
             ->with('success', 'Article removed from list: ' . $request->article_no_for_delete);
     }
 
-    public function save(Bag $bag, Request $request){
+    public function save(Bag $bag, Request $request)
+    {
         $user = Auth::user();
         $current_facility = $user->facility;
         $active_set = $current_facility->sets()->where('is_active', true)->firstOrFail();
@@ -204,8 +209,32 @@ class BagCloseController extends Controller
             'article_transaction_type_id' => $article_transaction_type_id,
         ]);
 
-        // create excel export and save it to disk
-        
+        // declare variables for excel export
+
+        $current_set = $current_facility->sets()->where('is_active', true)->first();
+        $time = Carbon::now();
+        $file_name = $current_set->facility->facility_code . '_' . $current_set->setType->name . '_' . date_format($time, "YmdHis") . '.xlsx';
+        $articles = $bag->articles->load('openingBag.fromFacility', 'articleType', 'articleTransactionType');
+        $type = 'CL';
+
+        // Save excel file
+        $set_date_and_type = $current_set->created_at->format('Ymd') . '_' . $current_set->setType->name;
+        $user_name = $user->name;
+
+        // Path to save excel file
+        $path = 'exports/' . $set_date_and_type . '/' . $user_name . '/' . $type . '/';
+        Excel::store(new ArticleCloseExport($articles, $type), $path . $file_name);
+
+        // Record export in database
+        Export::create([
+            'user_id' => $user->id,
+            'set_id' => $current_set->id,
+            'bag_id' => $bag->id,
+            'type' => $type,
+            'file_name' => $file_name,
+            'file_path' => $path . $file_name,
+        ]);
+
 
         return redirect()->route('bag-close.index')->with('manifest', $bag);
     }

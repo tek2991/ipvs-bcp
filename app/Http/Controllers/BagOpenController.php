@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
 use App\Models\Bag;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use App\Models\BagTransactionType;
-use Illuminate\Support\Facades\Auth;
-use App\Models\ArticleTransactionType;
+use App\Models\Export;
+use App\Models\Article;
 use App\Models\ArticleType;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 use App\Rules\ArticleNumberRule;
 use App\Rules\ArticleOpeningRule;
+use App\Models\BagTransactionType;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ArticleReceiveExport;
+use App\Models\ArticleTransactionType;
 
 class BagOpenController extends Controller
 {
@@ -179,6 +183,7 @@ class BagOpenController extends Controller
         ]);
 
         $bag_transaction_type_id = BagTransactionType::where('name', 'OP')->get()->first()->id;
+
         $bag->update([
             'bag_transaction_type_id' => $bag_transaction_type_id,
         ]);
@@ -186,6 +191,32 @@ class BagOpenController extends Controller
         $article_transaction_type_id = ArticleTransactionType::where('name', 'OP')->get()->first()->id;
         $bag->articles()->update([
             'article_transaction_type_id' => $article_transaction_type_id,
+        ]);
+
+        // declare variables for excel export
+
+        $current_set = $current_facility->sets()->where('is_active', true)->first();
+        $time = Carbon::now();
+        $file_name = $current_set->facility->facility_code.'_'. $current_set->setType->name .'_'.date_format($time, "YmdHis").'.xlsx';
+        $articles = $bag->articles->load('openingBag.fromFacility', 'articleType', 'articleTransactionType');
+        $type = 'OP';
+
+        // Save excel file
+        $set_date_and_type = $current_set->created_at->format('Ymd').'_'.$current_set->setType->name;
+        $user_name = $user->name;
+
+        // Path to save excel file
+        $path = 'exports/'.$set_date_and_type.'/'.$user_name.'/'.$type.'/';
+        Excel::store(new ArticleReceiveExport($articles, $type), $path . $file_name);
+
+        // Record export in database
+        Export::create([
+            'user_id' => $user->id,
+            'set_id' => $current_set->id,
+            'bag_id' => $bag->id,
+            'type' => $type,
+            'file_name' => $file_name,
+            'file_path' => $path . $file_name,
         ]);
 
         return redirect()->route('bag-open.index');

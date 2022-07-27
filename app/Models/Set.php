@@ -60,4 +60,8 @@ class Set extends Model
     public function setType(){
         return $this->belongsTo(SetType::class, 'set_type_id', 'id');
     }
+
+    public function exports(){
+        return $this->hasMany(Export::class);
+    }
 }
