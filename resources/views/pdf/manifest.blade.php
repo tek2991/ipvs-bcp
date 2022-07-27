@@ -118,7 +118,7 @@
             <tr>
                 <th style="text-align: left">
                     Bag Manifest <br>
-                    From: {{ $bag->fromFacility->name }}<br>
+                    From: {{ $bag->fromFacility->name }} {{ $bag->set->setType->name }}<br>
                     Bag Number: {{ $bag->bag_no }}
                 </th>
 

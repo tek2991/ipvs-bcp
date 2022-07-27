@@ -10,6 +10,42 @@
         </h2>
     </x-slot>
 
+    @if (session('success'))
+        <div class="py-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-green-300 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6">
+                        {{ session('success') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="py-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-red-300 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6">
+                        {{ session('error') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="py-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 bg-white border-b border-gray-200">
+                        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     @if (Auth::user()->is_admin() === true)
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -25,7 +61,7 @@
                                         <select name="set_id" id="set_id" autofocus
                                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                             @foreach ($sets as $set)
-                                                <option value="{{ $set->id }}">
+                                                <option value="{{ $set->id }}" {{ $set->created_at != $set->updated_at ? 'selected' : '' }} >
                                                     {{ $set->facility->name }},
                                                     {{ $set->created_at->toDayDateTimeString() }} to
                                                     {{ $set->created_at != $set->updated_at ? $set->updated_at->toDayDateTimeString() : 'Current' }}
@@ -89,7 +125,7 @@
                                     <select name="set_id" id="set_id" autofocus
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                         @foreach ($sets as $set)
-                                            <option value="{{ $set->id }}">
+                                            <option value="{{ $set->id }}" {{ $set->created_at != $set->updated_at ? 'selected' : '' }}>
                                                 {{ $set->facility->name }},
                                                 {{ $set->created_at->toDayDateTimeString() }} to
                                                 {{ $set->created_at != $set->updated_at ? $set->updated_at->toDayDateTimeString() : 'Current' }}

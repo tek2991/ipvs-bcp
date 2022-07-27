@@ -118,7 +118,7 @@
             <tr>
                 <th style="text-align: left">
                     Bag {{ $request->bag_report_type }} report<br>
-                    Facility: {{ $current_facility->name }} {{ $current_facility->facility_code }} <br>
+                    Facility: {{ $current_facility->name }} {{ $current_facility->facility_code }} {{ $set->setType->name }} <br>
                     Set begin: {{ $set->created_at->toDayDateTimeString() }}
                 </th>
 

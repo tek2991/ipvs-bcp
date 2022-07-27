@@ -86,6 +86,12 @@ class ExportController extends Controller
         }else{
             $type = $request->report_type == 'article_open' ? 'OP' : 'CL';
             $export_file_paths = Export::where('user_id', $user->id)->where('set_id', $set->id)->where('type', $type)->get()->pluck('file_path')->toArray();
+
+            // Check if there are any files to export
+            if(count($export_file_paths) == 0){
+                return redirect()->back()->with('error', 'No files to export');
+            }
+
             // Add all the file paths to a zip file.
             $zip = new ZipArchive();
             $zip_file_path = $set->facility->facility_code.'_'. $set->setType->name .'_'.date_format($set->updated_at, "YmdHis"). '_' . $user->name . '.zip';
@@ -96,6 +102,7 @@ class ExportController extends Controller
                 }
                 $zip->close();
             }
+            
             // Return the zip file.
             return response()->download($zip_file_path);
         }
