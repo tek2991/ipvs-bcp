@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ArticleReceiveExport;
 use App\Models\ArticleTransactionType;
+use App\Models\User;
 
 class ExportController extends Controller
 {
@@ -70,7 +71,7 @@ class ExportController extends Controller
         ]);
 
         $set = Set::find($request->set_id);
-        $user = Auth::user();
+        $user = User::find($request->user_id);
 
 
         if(in_array($request->report_type, ['bag_receive','bag_dispatch'])){
