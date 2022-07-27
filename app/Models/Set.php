@@ -34,6 +34,7 @@ class Set extends Model
         'updated_by',
         'facility_id',
         'is_active',
+        'set_type_id',
     ];
 
     public function creator(){
@@ -54,5 +55,9 @@ class Set extends Model
 
     public function articles(){
         return $this->hasMany(Article::class);
+    }
+
+    public function setType(){
+        return $this->belongsTo(SetType::class, 'set_type_id', 'id');
     }
 }

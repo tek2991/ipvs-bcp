@@ -56,6 +56,10 @@
                     Current Facility: {{ Auth::user()->facility->name }} -
                     {{ Auth::user()->facility->facility_code }} <br>
 
+                    Current Set Type:
+                    {{ count($currently_active) > 0 ? $currently_active->first()->setType->name : 'No active set' }}
+                    <br>
+
                     Current date: {{ now()->toDayDateTimeString() }} <br>
 
                     Current business date:
@@ -76,6 +80,16 @@
                 </div>
                 <form action="{{ route('set.store') }}" method="post">
                     @csrf
+                    <div class="px-7 py-2 font-bold">
+                        <label for="set_type_id" class="pt-2">Set Type</label>
+                        <x-input-select id="set_type_id"
+                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            name="set_type_id" required>
+                            @foreach ($set_types as $set_type)
+                                <option value="{{ $set_type->id }}">{{ $set_type->name }}</option>
+                            @endforeach
+                        </x-input-select>
+                    </div>
                     <div class="px-7 py-2 font-bold">
                         <label for="confirm" class="pt-2">Confirm</label>
                         <input type="checkbox" name="confirm" id="confirm" value="1"
@@ -127,6 +141,10 @@
                 @if (count($pending_arr) > 0)
                     <div class="px-6 pt-6 font-bold grid grid-cols-2 gap-16">
                         <div>
+                            <h4>
+                                Current Set Type:
+                                {{ count($currently_active) > 0 ? $currently_active->first()->setType->name : 'No active set' }}
+                            </h4>
                             <h4>Bags receive but not processed: {{ $pending_arr['bags_in_receive_status']->count() }}
                             </h4>
                             <h4>Bags in dispatch scan: {{ $pending_arr['bags_in_dispatch_scan_status']->count() }}

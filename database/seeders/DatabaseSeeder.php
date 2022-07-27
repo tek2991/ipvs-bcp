@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             FacilitySeeder::class,
             CadreSeeder::class,
             UserSeeder::class,
+            SetTypeSeeder::class,
+            DistrictSeeder::class,
             // MapAllFacilitiesSeeder::class,
         ]);
     }

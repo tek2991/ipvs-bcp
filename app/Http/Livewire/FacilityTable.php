@@ -101,7 +101,7 @@ final class FacilityTable extends PowerGridComponent
             ->addColumn('district.name')
             ->addColumn('reportingCircle.name')
             ->addColumn('is_active', function ($value) {
-                return $value ? 'Active' : 'N/A';
+                return $value->is_active == '1' ? 'Active' : 'Inactive';
             });
     }
 

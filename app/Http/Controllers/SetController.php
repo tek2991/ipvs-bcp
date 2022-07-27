@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\BagTransactionType;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ArticleTransactionType;
+use App\Models\SetType;
 
 class SetController extends Controller
 {
@@ -15,6 +16,7 @@ class SetController extends Controller
         $user = Auth::user();
         $currently_active = $user->facility->sets->where('is_active', true);
         $previously_active = $user->facility->sets->where('is_active', false);
+        $set_types = SetType::all();
 
         $pending_arr = [];
         $status_arr = [];
@@ -45,7 +47,7 @@ class SetController extends Controller
             $status_arr = compact('bags_received', 'bags_closed', 'articles_opened', 'articles_closed');
         }
 
-        return view('set', compact('currently_active', 'previously_active', 'pending_arr', 'status_arr'));
+        return view('set', compact('currently_active', 'previously_active', 'pending_arr', 'status_arr', 'set_types'));
     }
 
     public function store(Request $request)
@@ -55,7 +57,8 @@ class SetController extends Controller
         $active_set = Set::where('facility_id', $current_facility->id)->where('is_active', true)->get();
         
         $this->validate($request, [
-            'confirm' => 'required|boolean'
+            'confirm' => 'required|boolean',
+            'set_type_id' => 'required|exists:set_types,id',
         ]);
 
         if (count($active_set) > 0) {
@@ -69,6 +72,7 @@ class SetController extends Controller
             'updated_by' => $user->id,
             'facility_id' => $current_facility->id,
             'is_active' => true,
+            'set_type_id' => $request->set_type_id,
         ]);
 
         return redirect()

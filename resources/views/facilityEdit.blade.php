@@ -111,8 +111,8 @@
                             <div>
                                 <x-label for="is_active" :value="__('Status')" />
                                 <x-input-select id="is_active" class="block mt-1 w-full" name="is_active" required>
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
+                                    <option value="1" {{ $facility->is_active == 1 ? 'selected' : '' }} >Active</option>
+                                    <option value="0" {{ $facility->is_active != 1 ? 'selected' : '' }}>Inactive</option>
                                 </x-input-select>
                             </div>
 

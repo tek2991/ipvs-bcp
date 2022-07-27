@@ -204,6 +204,9 @@ class BagCloseController extends Controller
             'article_transaction_type_id' => $article_transaction_type_id,
         ]);
 
+        // create excel export and save it to disk
+        
+
         return redirect()->route('bag-close.index')->with('manifest', $bag);
     }
 }

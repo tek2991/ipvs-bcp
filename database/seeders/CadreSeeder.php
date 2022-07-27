@@ -15,18 +15,10 @@ class CadreSeeder extends Seeder
     public function run()
     {
         $cadres =  [
-            'Asst Supdt POs',
-            'Inspector Posts',
             'Sorting Assistant',
             'Multi Tasking Staff',
-            'Postal Service GrP B',
             'Mail Guard',
-            'SA LSG',
-            'Canteen',
-            'PA LSG',
-            'SA HSG-II',
-            'HSG II',
-            'Daksevak',
+            'GDS',
         ];
 
         foreach($cadres as $cadre){

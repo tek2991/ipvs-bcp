@@ -24,7 +24,7 @@
                                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                         @foreach ($sets as $set)
                                             <option value="{{ $set->id }}">
-                                                {{ $set->created_at->toDayDateTimeString() }} to
+                                                {{ $set->setType->name . ' ' . $set->created_at->toDayDateTimeString() }} to
                                                 {{ $set->created_at != $set->updated_at ? $set->updated_at->toDayDateTimeString() : 'Current' }}
                                             </option>
                                         @endforeach

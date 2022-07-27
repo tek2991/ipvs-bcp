@@ -18,6 +18,7 @@ class BagTypeSeeder extends Seeder
             'PP' => 'Parcel Bag',  
             'RP' => 'Register Bag',  
             'SP' => 'Speed Post Bag',  
+            'EP' => 'Express Parcel Bag',
         ];
 
         foreach ($bag_types as $key => $value) {
