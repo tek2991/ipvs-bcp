@@ -35,8 +35,8 @@ return [
          * https://flatpickr.js.org
          */
         'flatpickr' => [
-            'js'      => 'https://cdn.jsdelivr.net/npm/flatpickr',
-            'css'     => 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css',
+            'js'      => null,
+            'css'     => null,
             'locales' => [
                 'pt_BR' => [
                     'locale'     => 'pt',
