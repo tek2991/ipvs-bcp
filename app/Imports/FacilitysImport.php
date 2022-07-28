@@ -49,8 +49,8 @@ class FacilitysImport implements ToCollection, WithHeadingRow, WithValidation
     {
         foreach ($collection as $row) {
             // Check if facility_type exists
-            $facility_type = $row['facility_type'];
-            $facility_type = FacilityType::where('name', 'ilike', $facility_type)->first();
+            $facility_type = Str::upper($row['facility_type']);
+            $facility_type = FacilityType::where('name', 'like', $facility_type)->first();
             if (!$facility_type) {
                 $facility_type = FacilityType::create([
                     'name' => Str::upper($row['facility_type']),
@@ -59,8 +59,8 @@ class FacilitysImport implements ToCollection, WithHeadingRow, WithValidation
             }
 
             // Check if reporting_circle exists
-            $reporting_circle = $row['reporting_circle'];
-            $reporting_circle = ReportingCircle::where('name', 'ilike', $reporting_circle)->first();
+            $reporting_circle = Str::upper($row['reporting_circle']);
+            $reporting_circle = ReportingCircle::where('name', 'like', $reporting_circle)->first();
             if (!$reporting_circle) {
                 $reporting_circle = ReportingCircle::create([
                     'name' => Str::upper($row['reporting_circle']),
@@ -68,8 +68,8 @@ class FacilitysImport implements ToCollection, WithHeadingRow, WithValidation
             }
 
             // Check if district exists
-            $district = $row['district'];
-            $district = District::where('name', 'ilike', $district)->first();
+            $district = Str::upper($row['district']);
+            $district = District::where('name', 'like', $district)->first();
             if (!$district) {
                 $district = District::create([
                     'name' => Str::upper($row['district']),
@@ -77,8 +77,8 @@ class FacilitysImport implements ToCollection, WithHeadingRow, WithValidation
             }
 
             // Check if facility code already exists
-            $facility_code = $row['facility_code'];
-            $facility = Facility::where('facility_code', 'ilike', $facility_code)->first();
+            $facility_code = Str::upper($row['facility_code']);
+            $facility = Facility::where('facility_code', 'like', $facility_code)->first();
 
             // If facility does not exist, create it
             if (!$facility) {
