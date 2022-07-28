@@ -94,7 +94,7 @@ class ExportController extends Controller
 
             // Add all the file paths to a zip file.
             $zip = new ZipArchive();
-            $zip_file_path = $set->facility->facility_code.'_'. $set->setType->name .'_'.date_format($set->updated_at, "YmdHis"). '_' . $user->name . '.zip';
+            $zip_file_path = $set->facility->facility_code.'_'. $set->setType->name .'_'.date_format($set->updated_at, "YmdHis"). '_' . $user->name . '_' . $type . '.zip';
             $zip_file_path = storage_path('app/public/'.$zip_file_path);
             if ($zip->open($zip_file_path, \ZipArchive::CREATE) === TRUE) {
                 foreach ($export_file_paths as $file_path) {
