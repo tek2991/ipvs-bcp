@@ -60,11 +60,11 @@ class BagOpenController extends Controller
                 ->with('error', 'Bag is already open in another set.');
         }
         
-        // Check if bag is beign scanned by another user.
-        if($bag->updated_by != $user->id) {
+        // Check if bag is opened by another user.
+        if($bag->bag_transaction_type_id == $bag_transaction_type_id && $bag->updated_by != $user->id) {
             return redirect()
                 ->back()
-                ->with('error', 'Bag is being scanned by another user: '. $bag->updator->name);
+                ->with('error', 'Bag is being opened by another user: '. $bag->updator->name);
         }
 
         $bag->update([
