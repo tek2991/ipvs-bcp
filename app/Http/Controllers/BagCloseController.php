@@ -76,11 +76,24 @@ class BagCloseController extends Controller
             $bag_to_update->update([
                 'to_facility_id' => $request->to_facility_id,
                 'bag_type_id' => $request->bag_type_id,
-                'updated_by' => $user->id,
             ]);
         }
 
         $bag = Bag::where('bag_no', $request->bag_no)->where('set_id', $active_set->id)->where('bag_transaction_type_id', $bag_transaction_type_id)->firstOrFail();
+
+        if ($bag->bag_transaction_type_id == $bag_transaction_type_id && $bag->set_id != $active_set->id) {
+            return redirect()
+                ->back()
+                ->with('error', 'Bag is in another set: ' . $bag->set->name);
+        }
+        
+        // Check if bag is opened by another user.
+        if($bag->bag_transaction_type_id == $bag_transaction_type_id && $bag->updated_by != $user->id) {
+            return redirect()
+                ->back()
+                ->with('error', 'Bag is being closed by another user: '. $bag->updator->name);
+        }
+
         $articles = $bag->articles()->with('articleType')->orderBy('created_at', 'desc')->paginate();
 
         return view('bagCloseArticleScan', compact('active_set', 'request', 'bag', 'articles', 'article_types'));
