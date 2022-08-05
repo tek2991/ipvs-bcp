@@ -219,7 +219,7 @@
                         <input type="checkbox" name="confirm" id="confirm" value="1"
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     </div>
-                    @if (count($currently_active) == 0 && count($pending_arr))
+                    @if (count($currently_active) == 0 || $pending_arr['articles_in_open_status']->count() == 0)
                         <x-button class="mx-6 mb-6 bg-gray-800" disabled>
                             {{ __('Delete') }}
                         </x-button>
