@@ -116,4 +116,29 @@ class SetController extends Controller
             ->back()
             ->with('success', 'Set closed');
     }
+
+    public function destroyPendingArticles(){
+        $user = Auth::user();
+        $current_facility = $user->facility;
+        $active_set = $current_facility->sets()->where('is_active', true)->get();
+
+        if (count($active_set) == 0) {
+            return redirect()
+                ->back()
+                ->with('error', 'No active set');
+        }
+        $article_open_status = ArticleTransactionType::where('name', 'OP')->first()->id;
+        $articles_in_open_status = $active_set->first()->articles()->where('article_transaction_type_id', $article_open_status)->get();
+
+        foreach ($articles_in_open_status as $article) {
+            $article->update([
+                'deleted_by' => $user->id,
+            ]);
+            $article->delete();
+        }
+
+        return redirect()
+            ->back()
+            ->with('success', 'Articles deleted');
+    }
 }

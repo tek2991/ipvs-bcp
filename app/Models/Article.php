@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\Article
@@ -46,6 +47,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Article extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'article_no',
         'article_type_id',
@@ -59,6 +61,7 @@ class Article extends Model
         'is_insured',
         'created_by',
         'updated_by',
+        'deleted_by',
     ];
 
     public function articleType(){
@@ -99,5 +102,9 @@ class Article extends Model
 
     public function updator(){
         return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
+
+    public function deleter(){
+        return $this->belongsTo(User::class, 'deleted_by', 'id');
     }
 }

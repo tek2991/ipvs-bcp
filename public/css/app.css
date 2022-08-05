@@ -1427,6 +1427,12 @@ select {
 .pt-6 {
   padding-top: 1.5rem;
 }
+.pl-6 {
+  padding-left: 1.5rem;
+}
+.pl-16 {
+  padding-left: 4rem;
+}
 .pb-1 {
   padding-bottom: 0.25rem;
 }
@@ -1557,6 +1563,14 @@ select {
 .text-green-600 {
   --tw-text-opacity: 1;
   color: rgb(22 163 74 / var(--tw-text-opacity));
+}
+.text-orange-700 {
+  --tw-text-opacity: 1;
+  color: rgb(194 65 12 / var(--tw-text-opacity));
+}
+.text-red-700 {
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity));
 }
 .text-slate-500 {
   --tw-text-opacity: 1;

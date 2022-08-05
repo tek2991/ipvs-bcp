@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('set', SetController::class)->only('index', 'store');
     Route::put('set', [SetController::class, 'update'])->name('set.update');
+    Route::post('set-destroy-pending-articles', [SetController::class, 'destroyPendingArticles'])->name('set.destroy-pending-articles');
 
     Route::get('bag-receive', [BagReceiveController::class, 'index'])->name('bag-receive.index');
     Route::post('bag-receive', [BagReceiveController::class, 'store'])->name('bag-receive.store');

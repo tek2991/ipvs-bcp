@@ -181,5 +181,56 @@
             </div>
         </div>
     </div>
+    <div class="py-4">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="px-6 pt-6 font-bold text-lg">
+                    <h3>Soft delete pending articles</h3>
+                </div>
+                @if (count($pending_arr) > 0)
+                    <div class="px-6 pt-6 font-bold grid grid-cols-2">
+                            <h4>Articles opened but not processed:
+                                {{ $pending_arr['articles_in_open_status']->count() }}</h4>
+                            <h4>Articles in opening scan: {{ $pending_arr['articles_in_open_scan_status']->count() }}
+                            </h4>
+                            <h4>Articles in closing scan:
+                                {{ $pending_arr['articles_in_close_scan_status']->count() }}
+                            </h4>
+                    </div>
+                    <h4 class="pl-6 mt-4 text-red-700 font-bold">
+                        Alert:
+                    </h4>
+                    <ul class="pl-16 list-disc text-orange-700">
+                        <li>
+                            This will delete all articles that are opened but not processed.
+                        </li>
+                        <li>
+                            Articles in opening scan will <b class="text-red-700">not</b> be deleted.
+                        </li>
+                        <li>
+                            Articles in closing scan will <b class="text-red-700">not</b> be deleted.
+                        </li>
+                    </ul>
+                @endif
+                <form action="{{ route('set.destroy-pending-articles') }}" method="post" class="mt-4">
+                    @csrf
+                    <div class="px-7 py-2 font-bold">
+                        <label for="confirm" class="pt-2">Confirm</label>
+                        <input type="checkbox" name="confirm" id="confirm" value="1"
+                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    </div>
+                    @if (count($currently_active) == 0 && count($pending_arr))
+                        <x-button class="mx-6 mb-6 bg-gray-800" disabled>
+                            {{ __('Delete') }}
+                        </x-button>
+                    @else
+                        <x-button class="mx-6 mb-6 bg-red-800 hover:bg-red-600">
+                            {{ __('Delete') }}
+                        </x-button>
+                    @endif
+                </form>
+            </div>
+        </div>
+    </div>
 
 </x-app-layout>
