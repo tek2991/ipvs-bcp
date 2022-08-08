@@ -100,6 +100,8 @@
                                 <span>{{ $bag->bagType->description }}({{ $bag->bagTransactionType->description }})</span>
                                 <span>{{ $bag->fromFacility->name }} -> {{ $bag->toFacility->name }}</span>
                                 <span>{{ $bag->updated_at }}</span>
+                                <a href="{{ route('bag-manifest-download-excel', ['bag' => $bag->id]) }}"
+                                    class="font-bold text-blue-800 hover:text-blue-500" target="_blank">Download Excel</a>
                                 <a href="{{ route('bag-manifest', ['bag' => $bag->id]) }}"
                                     class="font-bold text-blue-800 hover:text-blue-500" target="_blank">Open</a>
                             </div>

@@ -22,6 +22,24 @@
         </div>
     @endif
 
+    @if (session('manifest'))
+        <div class="py-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-green-300 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6">
+                        Bag no {{ session('manifest')->bag_no }} closed successfully.
+                        <a href="{{ route('bag-manifest-download-excel', ['bag' => session('manifest')->id]) }}"
+                            class="font-bold text-blue-800 hover:text-blue-500" target="_blank">Download Excel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <script>
+        let btn = document.getElementById('click');
+        btn.click();
+    </script> --}}
+    @endif
+
     @if (session('error'))
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

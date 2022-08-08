@@ -219,6 +219,6 @@ class BagOpenController extends Controller
             'file_path' => $path . $file_name,
         ]);
 
-        return redirect()->route('bag-open.index');
+        return redirect()->route('bag-open.index')->with('manifest', $bag);
     }
 }

@@ -86,7 +86,7 @@ class Bag extends Model
         return $this->hasMany(Article::class);
     }
 
-    public function exports(){
-        return $this->hasMany(Export::class);
+    public function export(){
+        return $this->hasOne(Export::class);
     }
 }

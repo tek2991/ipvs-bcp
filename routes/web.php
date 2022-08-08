@@ -62,6 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('bag-close-article-delete-scan', [BagCloseController::class, 'articleDeleteScan'])->name('bag-close.articleDeleteScan');
 
     Route::get('manifest/{bag}', [pdfReportController::class, 'manifest'])->name('bag-manifest');
+    Route::get('manifest-download-excel/{bag}', [ManifestController::class, 'downloadExcel'])->name('bag-manifest-download-excel');
 
     Route::get('report', [ReportController::class, 'index'])->name('report.index');
     Route::get('manifest-report', [ManifestController::class, 'index'])->name('manifest-report.index');
