@@ -159,7 +159,8 @@ class BagOpenController extends Controller
 
         $article = Article::where('article_no', $request->article_no_for_delete)->where('bag_id', $request->bag_id)->whereIn('article_transaction_type_id', $article_status)->first();
 
-        $article->delete();
+        // Delete from database
+        $article->forceDelete();
 
         return redirect()
         ->back()
