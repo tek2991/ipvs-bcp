@@ -18,6 +18,7 @@ use App\Http\Controllers\ArticleReportController;
 use App\Http\Controllers\InsuredReportController;
 use App\Http\Controllers\PendingArticleController;
 use App\Http\Controllers\FacilityMappingController;
+use App\Http\Controllers\BagDispatchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('bag-close-article-scan', [BagCloseController::class, 'articleScan'])->name('bag-close.articleScan');
     Route::put('bag-close-save/{bag}', [BagCloseController::class, 'save'])->name('bag-close.save');
     Route::delete('bag-close-article-delete-scan', [BagCloseController::class, 'articleDeleteScan'])->name('bag-close.articleDeleteScan');
+
+    Route::get('bag-dispatch', [BagDispatchController::class, 'index'])->name('bag-dispatch.index');
+    Route::post('bag-dispatch', [BagDispatchController::class, 'store'])->name('bag-dispatch.store');
 
     Route::get('manifest/{bag}', [pdfReportController::class, 'manifest'])->name('bag-manifest');
     Route::get('manifest-download-excel/{bag}', [ManifestController::class, 'downloadExcel'])->name('bag-manifest-download-excel');

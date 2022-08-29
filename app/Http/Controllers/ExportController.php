@@ -37,16 +37,16 @@ class ExportController extends Controller
         $set = Set::find($request->set_id);
 
         if(in_array($request->report_type, ['bag_receive','bag_dispatch'])){
-            $bag_status_names = $request->report_type == 'bag_receive' ? ['RD', 'OP'] : ['CL', 'DI'];
+            $bag_status_names = $request->report_type == 'bag_receive' ? ['RD', 'OP', 'OP_SCAN', 'DI'] : ['CL', 'DI'];
             $bag_status_ids = BagTransactionType::whereIn('name', $bag_status_names)->get()->modelKeys();
             $bags = $set->bags()->whereIn('bag_transaction_type_id', $bag_status_ids)->with('bagType', 'bagTransactionType')->get();
 
             $date_time = $request->report_type == 'bag_dispatch' ? $set->updated_at->addMinute() : $set->updated_at;
             $name = $set->facility->facility_code.'_'.'GEN1'.'_'.date_format($date_time, "YmdHi").'.xlsx';
             $status = $request->report_type == 'bag_receive' ? 'RD' : 'DI';
-            return Excel::download(new BagExport($bags, $status), $name);
+            return Excel::download(new BagExport($bags, $status, $request->report_type), $name);
         }else{
-            $article_status_names = $request->report_type == 'article_open' ? ['OP', 'CL'] : ['CL'];
+            $article_status_names = $request->report_type == 'article_open' ? ['OP', 'CL', 'CL_SCAN'] : ['CL'];
             $article_status_ids = ArticleTransactionType::whereIn('name', $article_status_names)->get()->modelKeys();
 
             $date_time = $request->report_type == 'article_open' ? $set->updated_at->addMinute(2) : $set->updated_at->addMinute(3);
@@ -75,14 +75,14 @@ class ExportController extends Controller
 
 
         if(in_array($request->report_type, ['bag_receive','bag_dispatch'])){
-            $bag_status_names = $request->report_type == 'bag_receive' ? ['RD', 'OP'] : ['CL', 'DI'];
+            $bag_status_names = $request->report_type == 'bag_receive' ? ['RD', 'OP', 'OP_SCAN', 'DI'] : ['CL', 'DI'];
             $bag_status_ids = BagTransactionType::whereIn('name', $bag_status_names)->get()->modelKeys();
             $bags = $set->bags()->whereIn('bag_transaction_type_id', $bag_status_ids)->where('updated_by', $user->id)->with('bagType', 'bagTransactionType')->get();
 
             $date_time = $request->report_type == 'bag_dispatch' ? $set->updated_at->addMinute() : $set->updated_at;
             $name = $set->facility->facility_code.'_'. $set->setType->name .'_'.date_format($date_time, "YmdHis").'.xlsx';
             $status = $request->report_type == 'bag_receive' ? 'RD' : 'DI';
-            return Excel::download(new BagExport($bags, $status), $name);
+            return Excel::download(new BagExport($bags, $status, $request->report_type), $name);
         }else{
             $type = $request->report_type == 'article_open' ? 'OP' : 'CL';
             $export_file_paths = Export::where('user_id', $user->id)->where('set_id', $set->id)->where('type', $type)->get()->pluck('file_path')->toArray();

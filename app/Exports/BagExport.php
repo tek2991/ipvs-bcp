@@ -10,11 +10,14 @@ class BagExport implements FromCollection, WithHeadings, WithMapping
 {
     protected $bags;
     protected $status;
-    function __construct($bags, $status)
+    protected $report_type;
+    function __construct($bags, $status, $report_type)
     {
         $this->bags = $bags;
         $this->status = $status;
+        $this->report_type = $report_type;
     }
+
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -36,12 +39,30 @@ class BagExport implements FromCollection, WithHeadings, WithMapping
 
     public function map($bag): array
     {
-        return [
-            $bag->bag_no,
-            $bag->fromFacility->facility_code,
-            $bag->bagType->name,
-            $this->status,
-            '1',
-        ];
+        if($this->report_type == 'bag_receive'){
+            return [
+                $bag->bag_no,
+                $bag->fromFacility->facility_code,
+                $bag->bagType->name,
+                $this->status,
+                $bag->weight
+            ];
+        }else{
+            return [
+                $bag->bag_no,
+                $bag->toFacility->facility_code,
+                $bag->bagType->name,
+                $this->status,
+                $bag->weight
+            ];
+        }
+        
+        // return [
+        //     $bag->bag_no,
+        //     $bag->fromFacility->facility_code,
+        //     $bag->bagType->name,
+        //     $this->status,
+        //     '1',
+        // ];
     }
 }

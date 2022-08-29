@@ -30,7 +30,7 @@ class BagReportController extends Controller
             'set_id' => 'nullable|integer|exists:sets,id',
             'bag_report_type' => 'nullable|string|in:receive,close'
         ]);
-        $bag_statuses = $request->bag_report_type == 'receive' ? ['RD', 'OP_SCAN', 'OP'] : ['CL', 'DI_SCAN', 'DI'];
+        $bag_statuses = $request->bag_report_type == 'receive' ? ['RD', 'OP_SCAN', 'OP', 'DI'] : ['CL', 'DI_SCAN', 'DI'];
         $bag_status_ids = BagTransactionType::whereIn('name', $bag_statuses)->get()->modelKeys();
         $set = Set::find($request->set_id);
         $bags = $set->bags()->whereIn('bag_transaction_type_id', $bag_status_ids)->get();
