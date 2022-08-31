@@ -23,6 +23,10 @@ class ExportController extends Controller
 
         $users = $current_facility->users()->get();
 
+        if($user->is_admin()){
+            $users = User::all();
+        }
+
         $sets = $user->username != 'administrator' ? $current_facility->sets()->orderBy('created_at', 'desc')->get() : Set::orderBy('created_at', 'desc')->get();
 
         return view('export', compact('sets', 'users'));
