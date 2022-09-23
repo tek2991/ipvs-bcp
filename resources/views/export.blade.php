@@ -65,6 +65,7 @@
                                                     {{ $set->facility->name }},
                                                     {{ $set->created_at->toDayDateTimeString() }} to
                                                     {{ $set->created_at != $set->updated_at ? $set->updated_at->toDayDateTimeString() : 'Current' }}
+                                                    {{ $set->setType->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -129,6 +130,7 @@
                                                 {{ $set->facility->name }},
                                                 {{ $set->created_at->toDayDateTimeString() }} to
                                                 {{ $set->created_at != $set->updated_at ? $set->updated_at->toDayDateTimeString() : 'Current' }}
+                                                {{ $set->setType->name }}
                                             </option>
                                         @endforeach
                                     </select>
