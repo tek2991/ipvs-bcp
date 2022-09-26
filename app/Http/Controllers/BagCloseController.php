@@ -201,20 +201,24 @@ class BagCloseController extends Controller
         ]);
 
         $article = Article::where('article_no', $request->article_no_for_delete)->where('bag_id', $request->bag_id)->whereIn('article_transaction_type_id', $article_status)->first();
+        
+        if($article->openingBag != null){
+            $opening_bag = $article->openingBag;
+            $article_transaction_type_id = ArticleTransactionType::where('name', 'OP')->get()->first()->id;
 
-        $opening_bag = $article->openingBag;
+             $article->update([
+                'from_facility_id' => $opening_bag->fromFacility->id,
+                'to_facility_id' => $current_facility->id,
+                'article_transaction_type_id' =>  $article_transaction_type_id,
+                'bag_id' => $opening_bag->id,
+                'closing_bag_id' => null,
+                'set_id' => $active_set->id,
+                'updated_by' => $user->id,
+             ]);
+        }else{
+            $article->forceDelete();
+        }
 
-        $article_transaction_type_id = ArticleTransactionType::where('name', 'OP')->get()->first()->id;
-
-        $article->update([
-            'from_facility_id' => $opening_bag->fromFacility->id,
-            'to_facility_id' => $current_facility->id,
-            'article_transaction_type_id' =>  $article_transaction_type_id,
-            'bag_id' => $opening_bag->id,
-            'closing_bag_id' => null,
-            'set_id' => $active_set->id,
-            'updated_by' => $user->id,
-        ]);
 
         return redirect()
             ->back()
