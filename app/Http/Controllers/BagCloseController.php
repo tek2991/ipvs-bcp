@@ -117,30 +117,57 @@ class BagCloseController extends Controller
             'bag_id' => 'bail|required|exists:bags,id',
 
             'article_no' => [
-                'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}$^', 'exists:articles',
+                'bail', 'required', 'alpha_num', 'size:13', 'regex:^[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}$^',
                 new ArticleNumberRule,
-                new ArticleClosingRule($active_set),
+                new ArticleClosingRule($active_set, $request->confirm_force ? true : false),
             ],
-            'to_facility_id' => 'bail|required|integer|exists:facilities,id'
+            'to_facility_id' => 'bail|required|integer|exists:facilities,id',
+
+            'confirm_force' => 'bail|boolean',
+
+            'article_type_id' => [
+                'bail', 'integer', 'exists:article_types,id', 'exists:article_types,id',
+                Rule::requiredIf($request->confirm_force == 1 || $request->confirm_force == 'true')
+            ],
         ]);
 
         $article_transaction_type_id = ArticleTransactionType::where('name', 'CL_SCAN')->get()->first()->id;
-
         $article_statuses = ArticleTransactionType::whereIn('name', ['OP'])->get()->modelKeys();
+        // Get the article
+        $article = Article::where('article_no', $request->article_no)->where('set_id', $active_set->id)->whereIn('article_transaction_type_id', $article_statuses)->first();
 
-        $article = Article::where('article_no', $request->article_no)->where('set_id', $active_set->id)->whereIn('article_transaction_type_id', $article_statuses);
+        // If confirm_force is true check if the article does not exist
+        if ($request->confirm_force && !$article) {
+            // Create the article
+            $article = Article::create([
+                'article_no' => strtoupper($request->article_no),
+                'from_facility_id' => $current_facility->id,
+                'to_facility_id' => $request->to_facility_id,
+                'article_transaction_type_id' =>  $article_transaction_type_id,
+                'bag_id' => $request->bag_id,
+                'closing_bag_id' => $request->bag_id,
+                'set_id' => $active_set->id,
+                'created_by' => $user->id,
+                'updated_by' => $user->id,
+                'article_type_id' => $request->article_type_id,
+                'is_insured' => false,
+                'opening_bag_id' => null,
+            ]);
 
-        $article->update([
-            'article_no' => strtoupper($request->article_no),
-            'from_facility_id' => $current_facility->id,
-            'to_facility_id' => $request->to_facility_id,
-            'article_transaction_type_id' =>  $article_transaction_type_id,
-            'bag_id' => $request->bag_id,
-            'closing_bag_id' => $request->bag_id,
-            'set_id' => $active_set->id,
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
-        ]);
+        }else{
+            // Update the article
+            $article->update([
+                'article_no' => strtoupper($request->article_no),
+                'from_facility_id' => $current_facility->id,
+                'to_facility_id' => $request->to_facility_id,
+                'article_transaction_type_id' =>  $article_transaction_type_id,
+                'bag_id' => $request->bag_id,
+                'closing_bag_id' => $request->bag_id,
+                'set_id' => $active_set->id,
+                'created_by' => $user->id,
+                'updated_by' => $user->id,
+            ]);
+        }
 
         return redirect()
             ->back()

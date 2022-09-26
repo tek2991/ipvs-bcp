@@ -59,7 +59,7 @@
         </div>
     @endif
 
-    <div class="py-6">
+    <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -83,30 +83,57 @@
                             </div>
                         </div>
                         <div class="flex gap-4 mt-6 justify-between">
-                            <form action="{{ route('bag-close.articleScan') }}" method="post" class="flex gap-4">
+                            <form action="{{ route('bag-close.articleScan') }}" method="post">
                                 @csrf
                                 <input type="hidden" name="bag_no" value="{{ $request->bag_no }}">
                                 <input type="hidden" name="bag_id" value="{{ $bag->id }}">
                                 <input type="hidden" name="to_facility_id" value="{{ $bag->toFacility->id }}">
 
-                                <label for="article_no" class="pt-2 text-lg font-semibold">Article No:</label>
-                                <input name="article_no" id="article_no" type="text" autofocus
-                                    value="{{ $errors->any() ? old('article_no') : '' }}"
-                                    class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                </input>
-                                <div class="">
-                                    <button type="submit"
-                                        class="inline-flex items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Submit</button>
+                                <div class="flex gap-4">
+                                    <label for="article_no" class="pt-2 text-lg font-semibold">Article No:</label>
+                                    <input name="article_no" id="article_no" type="text" autofocus
+                                        value="{{ $errors->any() ? old('article_no') : '' }}"
+                                        class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </input>
+                                    <div class="">
+                                        <button type="submit"
+                                            class="inline-flex items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Submit</button>
+                                    </div>
                                 </div>
+
+                                <div class="flex gap-4">
+                                    <div class="mt-6">
+                                        <label for="article_type_id" class="pt-2 text-lg font-semibold mr-4">Article
+                                            type:</label>
+                                        <select name="article_type_id" id="article_type_id"
+                                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                            <option value="" disabled selected>Select Article Type</option>
+                                            @foreach ($article_types as $article_type)
+                                                <option value="{{ $article_type->id }}"
+                                                    {{ $article_type->id == old('article_type_id') ? 'selected' : '' }}>
+                                                    {{ $article_type->description }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="flex items-end ml-4">
+                                        <label for="confirm_force" class="">Confirm Force Scan</label>
+                                        <input type="checkbox" name="confirm_force" id="confirm_force" value="1"
+                                            {{ old('confirm_force') ? 'checked' : '' }}
+                                            class="rounded-md ml-3 mb-1.5 shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                </div>
+
+
                             </form>
                             <form action="{{ route('bag-close.save', ['bag' => $bag->id]) }}" method="post"
-                                class="flex gap-4">
+                                class="flex gap-4 items-end">
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="bag_id" value="{{ $bag->id }}">
                                 <input type="hidden" name="bag_no" value="{{ $request->bag_no }}">
                                 <button type="submit"
-                                    class="inline-flex items-center px-4 py-3 bg-green-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 active:bg-gray-900 focus:outline-none focus:border-green-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Save
+                                    class="px-4 py-3 bg-green-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 active:bg-gray-900 focus:outline-none focus:border-green-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 max-12">Save
                                     Bag</button>
                             </form>
                         </div>
