@@ -108,7 +108,7 @@ class SetController extends Controller
                 ->with('error', 'Pending bags: ' . $pending_bags . ', Pending articles: '. $pending_articles);
         }
 
-        $active_set->first()->update([
+        $active_set->update([
             'is_active' => false,
         ]);
 
