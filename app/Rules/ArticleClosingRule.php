@@ -42,7 +42,7 @@ class ArticleClosingRule implements Rule
             }
 
             // Get the article statuses
-            $article_statuses = ArticleTransactionType::whereIn('name', ['CL'])->get()->modelKeys();
+            $article_statuses = ArticleTransactionType::whereIn('name', ['CL', 'CL_SCAN'])->get()->modelKeys();
 
             // get the article status id
             $article_status_id = $article->article_transaction_type_id;

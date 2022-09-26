@@ -86,6 +86,10 @@ class Bag extends Model
         return $this->hasMany(Article::class);
     }
 
+    public function hasInsuredArticles(){
+        return $this->articles()->where('is_insured', 1)->exists();
+    }
+
     public function export(){
         return $this->hasOne(Export::class);
     }

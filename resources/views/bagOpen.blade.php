@@ -27,7 +27,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-green-300 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">
-                        Bag no {{ session('manifest')->bag_no }} closed successfully.
+                        Bag no {{ session('manifest')->bag_no }} opened successfully.
                         <a href="{{ route('bag-manifest-download-excel', ['bag' => session('manifest')->id]) }}"
                             class="font-bold text-blue-800 hover:text-blue-500" target="_blank">Download Excel</a>
                     </div>

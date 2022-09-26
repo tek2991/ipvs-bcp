@@ -1,7 +1,16 @@
 <x-app-layout>
+    @php
+        // Get the bag model
+        $bag = \App\Models\Bag::where('bag_no',$request->bag_no)->first();
+        // Check if it has Insured Articles
+        $has_insured = $bag->hasInsuredArticles();
+    @endphp
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Bag Open Scan') }}
+            @if ($has_insured === true)
+                <span class="text-red-800 text-md"> &nbsp; Contains Insured Articles</span>
+            @endif
         </h2>
     </x-slot>
     <x-slot name="info">

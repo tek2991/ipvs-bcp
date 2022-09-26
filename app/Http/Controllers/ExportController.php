@@ -92,6 +92,7 @@ class ExportController extends Controller
             return Excel::download(new BagExport($bags, $status, $request->report_type), $name);
         }
 
+        /*
         if (in_array($request->report_type, ['article_open_zip', 'article_close_zip'])) {
             $type = $request->report_type == 'article_open_zip' ? 'OP' : 'CL';
             $export_file_paths = Export::where('user_id', $user->id)->where('set_id', $set->id)->where('type', $type)->get()->pluck('file_path')->toArray();
@@ -115,6 +116,7 @@ class ExportController extends Controller
             // Return the zip file.
             return response()->download($zip_file_path);
         }
+        */
 
         if (in_array($request->report_type, ['article_open', 'article_close'])) {
             $article_status_names = $request->report_type == 'article_open' ? ['OP', 'CL', 'CL_SCAN'] : ['CL'];

@@ -69,6 +69,7 @@ class BagOpenController extends Controller
 
         $bag->update([
             'bag_transaction_type_id' => $bag_transaction_type_id,
+            'created_by' => $user->id,
             'updated_by' => $user->id,
         ]);
 
