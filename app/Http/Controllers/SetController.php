@@ -84,23 +84,23 @@ class SetController extends Controller
     {
         $user = Auth::user();
         $current_facility = $user->facility;
-        $active_set = $current_facility->sets()->where('is_active', true)->get();
+        $active_set = $current_facility->sets()->where('is_active', true)->first();
 
         $this->validate($request, [
             'confirm' => 'required|boolean'
         ]);
         
-        if (count($active_set) == 0) {
+        if (!$active_set) {
             return redirect()
                 ->back()
                 ->with('error', 'No active set');
         }
 
-        $bag_statuses = BagTransactionType::whereIn('name', ['RD', 'DI_SCAN'])->first()->id;
-        $article_statuses = ArticleTransactionType::whereIn('name', ['OP_SCAN', 'OP', 'CL_SCAN'])->first()->id;
+        $bag_statuses = BagTransactionType::whereIn('name', ['RD', 'DI_SCAN'])->get()->modelKeys();
+        $article_statuses = ArticleTransactionType::whereIn('name', ['OP_SCAN', 'OP', 'CL_SCAN'])->get()->modelKeys();
 
-        $pending_bags = $active_set->first()->bags()->where('bag_transaction_type_id', $bag_statuses)->get()->count();
-        $pending_articles = $active_set->first()->articles()->where('article_transaction_type_id', $article_statuses)->get()->count();
+        $pending_bags = $active_set->bags()->whereIn('bag_transaction_type_id', $bag_statuses)->count();
+        $pending_articles = $active_set->articles()->whereIn('article_transaction_type_id', $article_statuses)->count();
 
         if ($pending_bags + $pending_articles > 0) {
             return redirect()
