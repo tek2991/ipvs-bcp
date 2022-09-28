@@ -96,7 +96,7 @@ class SetController extends Controller
                 ->with('error', 'No active set');
         }
 
-        $bag_statuses = BagTransactionType::whereIn('name', ['RD', 'DI_SCAN'])->get()->modelKeys();
+        $bag_statuses = BagTransactionType::whereIn('name', ['DI_SCAN'])->get()->modelKeys();
         $article_statuses = ArticleTransactionType::whereIn('name', ['OP_SCAN', 'OP', 'CL_SCAN'])->get()->modelKeys();
 
         $pending_bags = $active_set->bags()->whereIn('bag_transaction_type_id', $bag_statuses)->count();
