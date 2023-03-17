@@ -122,9 +122,9 @@ class ExportController extends Controller
             $article_status_names = $request->report_type == 'article_open' ? ['OP', 'CL', 'CL_SCAN'] : ['CL'];
             $article_status_ids = ArticleTransactionType::whereIn('name', $article_status_names)->get()->modelKeys();
             
-            $current_facility = $user->facility;
-            $current_set = $current_facility->sets()->where('is_active', true)->first();
-            $set_date_and_type = $current_set->created_at->format('Ymd') . '_' . $current_set->setType->name;
+            // $current_facility = $user->facility;
+            // $current_set = $current_facility->sets()->where('is_active', true)->first();
+            $set_date_and_type = $set->created_at->format('Ymd') . '_' . $set->setType->name;
             $date_time = $request->report_type == 'article_open' ? $set->updated_at->addMinute(2) : $set->updated_at->addMinute(3);
 
             $status = $request->report_type == 'article_open' ? 'OP' : 'CL';
